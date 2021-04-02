@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 
-import { songReducer } from './reducers';
+import { songReducer, playStateReducer } from './reducers';
 
 export const reducers = combineReducers({
   songs: songReducer,
+  playState: playStateReducer,
 });
 
 export * from './actions';
