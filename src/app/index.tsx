@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Slider } from '../components';
 
 import { ADD_SONGS, PAUSE_SONG, PLAY_SONG, RESUME_SONG } from '../redux';
 import AudioSession from '../services/audio-session';
@@ -14,6 +15,7 @@ function App() {
 
   const songs = useSelector((state: any) => state.songs);
   const playState = useSelector((state: any) => state.playState);
+  const [range, setRange] = useState<number>(0);
 
   const audioPlayer = (): HTMLAudioElement => audio.current!;
 
@@ -146,10 +148,6 @@ function App() {
 
         ctx.strokeStyle = color();
 
-        if (i % 100 === 0) {
-          console.log(dataArray[i]);
-        }
-
         if (i === 0) {
           ctx.moveTo(x, y);
         } else {
@@ -166,15 +164,40 @@ function App() {
     draw();
   }
 
+  const updateTime = () => {
+    const currentTime =
+      (100 * audioPlayer().currentTime) / audioPlayer().duration || 0;
+
+    setRange(Math.round(currentTime));
+  };
+
+  const timeDrag = (time: number) => {
+    const range = audioPlayer().duration * (time / 100);
+    if (!isNaN(range)) {
+      audioPlayer().currentTime = range;
+    }
+  };
+
   return (
     <div className="App">
+      <Slider
+        value={range}
+        onTouch={() => pauseSong()}
+        onTouchEnd={() => resumeSong()}
+        onChange={(v: number) => timeDrag(v)}
+      />
       <input
         multiple
         type="file"
         accept="audio/mp3"
         onChange={e => dispatch(ADD_SONGS(e.target.files))}
       />
-      <audio controls ref={audio} onEnded={() => handleSongEnd()}></audio>
+      <audio
+        controls
+        ref={audio}
+        onEnded={() => handleSongEnd()}
+        onTimeUpdate={() => updateTime()}
+      ></audio>
       {songs.map(({ name }: any, index: number) => (
         <div
           key={index}

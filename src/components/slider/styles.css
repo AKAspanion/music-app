@@ -1,0 +1,69 @@
+.slider {
+  position: relative;
+  border-radius: 50%;
+  width: var(--size);
+  height: var(--size);
+}
+
+.slider__range {
+  opacity: 0;
+  user-select: none;
+  position: absolute;
+}
+
+.slider__track {
+  top: 50%;
+  height: 50%;
+  width: 100%;
+  z-index: 10;
+  overflow: hidden;
+  user-select: none;
+  position: absolute;
+  background-color: red;
+  border-radius: 0 0 var(--size) var(--size);
+}
+
+.slider__dial {
+  left: 0px;
+  z-index: 40;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  background-color: #fff;
+  width: var(--dial-size);
+  height: var(--dial-size);
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+  --dial-calc: calc(calc(var(--dial-size) / 2) * -0.5);
+  transform: translate(
+    var(--dial-calc),
+    calc(calc(var(--size) / 2) + var(--dial-calc))
+  );
+}
+.slider__dial:focus {
+  outline: none;
+}
+
+.slider__info {
+  z-index: 30;
+  cursor: default;
+  border-radius: 50%;
+  position: absolute;
+  user-select: none;
+  text-align: center;
+  background-color: #fff;
+  text-transform: uppercase;
+  font: 400 16px/1.1 'Roboto', sans-serif;
+  top: calc(calc(var(--dial-size) / 2));
+  left: calc(calc(var(--dial-size) / 2));
+  width: calc(var(--size) - calc(calc(var(--dial-size))));
+  height: calc(var(--size) - calc(calc(var(--dial-size))));
+}
+
+.slider__blocker {
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  background-color: #eee;
+  transform-origin: top center;
+}
