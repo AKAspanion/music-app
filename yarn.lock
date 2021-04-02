@@ -1803,6 +1803,11 @@
     "jest-diff" "^26.0.0"
     "pretty-format" "^26.0.0"
 
+"@types/jsmediatags@^3.9.2":
+  "integrity" "sha512-JVCmfjLZHCDtYL/6a7V1tBfc+uDvWBSsuOqMUJ63OYJuErRZIeUyOjiRFczyUk5vYcIcrsZTb32PpcqYR00idg=="
+  "resolved" "https://registry.npmjs.org/@types/jsmediatags/-/jsmediatags-3.9.2.tgz"
+  "version" "3.9.2"
+
 "@types/json-schema@*", "@types/json-schema@^7.0.3", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.6":
   "integrity" "sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA=="
   "resolved" "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.7.tgz"
@@ -6907,6 +6912,13 @@
   "resolved" "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz"
   "version" "0.5.0"
 
+"jsmediatags@^3.9.5":
+  "integrity" "sha512-wwzB/c2wcVNRWYDnV2AS0WNx1gjuj961Vk5vP5jyk7TyQHn4k7Yv2f3qAur6OiPmH3Ov1ZirRHFy5pLheA+VqA=="
+  "resolved" "https://registry.npmjs.org/jsmediatags/-/jsmediatags-3.9.5.tgz"
+  "version" "3.9.5"
+  dependencies:
+    "xhr2" "^0.1.4"
+
 "json-parse-better-errors@^1.0.1", "json-parse-better-errors@^1.0.2":
   "integrity" "sha512-mrqyZKfX5EhL7hvqcV6WG1yYjnjeuYDzDhhcAAUrq8Po85NBQBJP+ZDUT75qZQ98IkUoBqdkExkukOU7Ts2wrw=="
   "resolved" "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz"
@@ -11824,6 +11836,11 @@
   "integrity" "sha512-hr6vCR76GsossIRsr8OLR9acVVm1jyfEWvhbNjtgPOrfvAlKzvyeg/P6r8RuDjRyrcQoPQT7K0DGEPc7Ae6jzA=="
   "resolved" "https://registry.yarnpkg.com/ws/-/ws-7.4.3.tgz"
   "version" "7.4.3"
+
+"xhr2@^0.1.4":
+  "integrity" "sha1-f4dliEdxbbUCYyOBL4GMras4el8="
+  "resolved" "https://registry.npmjs.org/xhr2/-/xhr2-0.1.4.tgz"
+  "version" "0.1.4"
 
 "xml-name-validator@^3.0.0":
   "integrity" "sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw=="

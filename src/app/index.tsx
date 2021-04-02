@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ADD_SONGS, PAUSE_SONG, PLAY_SONG, RESUME_SONG } from '../redux';
-// import { addNewSongToSession } from '../services/audio-session';
+import AudioSession from '../services/audio-session';
 import './styles.css';
 
 function App() {
@@ -10,37 +10,70 @@ function App() {
 
   const audio = useRef(null);
   const dispatch = useDispatch();
+
   const songs = useSelector((state: any) => state.songs);
   const playState = useSelector((state: any) => state.playState);
 
-  // const [songIndex, setSongIndex] = useState(-1);
   const audioPlayer = (): HTMLAudioElement => audio.current!;
 
-  const playSong = async () => {
+  const play = async () => {
     if (audio.current) {
-      await audioPlayer().play();
+      try {
+        await audioPlayer().play();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
-  const pauseSong = () => {
+  const pause = () => {
     if (audio.current) {
       audioPlayer().pause();
     }
   };
 
-  const startSong = async (index: number) => {
-    if (audio.current) {
-      const htmlAudio: HTMLAudioElement = audioPlayer();
-      htmlAudio.src = URL.createObjectURL(songs[index]);
+  const start = async (index: number) => {
+    try {
+      if (audio.current) {
+        const htmlAudio: HTMLAudioElement = audioPlayer();
+        htmlAudio.src = URL.createObjectURL(songs[index]);
 
-      await htmlAudio.play();
+        await htmlAudio.play();
 
-      console.log(htmlAudio.volume);
+        AudioSession.addNewSong(songs[index], {
+          next: () => nextSong(),
+          prev: () => prevSong(),
+          play: () => resumeSong(),
+          pause: () => pauseSong(),
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleSongEnd = () => {
+  const nextSong = () => {
     dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+  };
+
+  const prevSong = () => {
+    const prevIndex = playState.index - 1;
+    const index = prevIndex < 0 ? songs.length - 1 : prevIndex;
+    dispatch(PLAY_SONG(index));
+  };
+
+  const pauseSong = () => {
+    AudioSession.updatePositionState(audioPlayer());
+    dispatch(PAUSE_SONG());
+  };
+
+  const resumeSong = () => {
+    AudioSession.updatePositionState(audioPlayer());
+    dispatch(RESUME_SONG());
+  };
+
+  const handleSongEnd = () => {
+    nextSong();
   };
 
   useEffect(() => {
@@ -49,13 +82,13 @@ function App() {
       const { index: prevIndex } = prevPlayState.current;
 
       if (!playing) {
-        pauseSong();
+        pause();
       } else if (index === -1) {
-        startSong(0);
+        start(0);
       } else if (index === prevIndex) {
-        playSong();
+        play();
       } else {
-        startSong(index);
+        start(index);
       }
     }
 
@@ -81,10 +114,10 @@ function App() {
           {name}
         </div>
       ))}
-      <div className="button" onClick={() => dispatch(PAUSE_SONG())}>
+      <div className="button" onClick={() => pauseSong()}>
         Pause
       </div>
-      <div className="button" onClick={() => dispatch(RESUME_SONG())}>
+      <div className="button" onClick={() => resumeSong()}>
         Play
       </div>
     </div>

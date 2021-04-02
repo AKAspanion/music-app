@@ -10,6 +10,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "jsmediatags": "^3.9.5",
     "localforage": "^1.9.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -56,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@types/jsmediatags": "^3.9.2",
     "@types/localforage": "^0.0.34"
   }
 }
