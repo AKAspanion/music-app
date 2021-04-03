@@ -1,5 +1,6 @@
 import Button from './button';
 import Slider from './slider';
+import Header from './header';
 import Visualizer from './visualizer';
 
-export { Button, Slider, Visualizer };
+export { Header, Button, Slider, Visualizer };

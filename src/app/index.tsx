@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Slider, Visualizer } from '../components';
+import { Header, Slider, Visualizer } from '../components';
 import { useResize } from '../hooks';
 
 import { ADD_SONGS, PAUSE_SONG, PLAY_SONG, RESUME_SONG } from '../redux';
 import AudioSession from '../services/audio-session';
-import { NowPlaying, Paylist } from '../views';
+import { Home, NowPlaying, Playlist } from '../views';
 import './styles.css';
 
 function App() {
@@ -134,21 +134,39 @@ function App() {
   return (
     <div ref={ref} className="app__wrapper">
       <div className="app__container">
-        <Slider
+        <Header />
+        <Home
+          playlist={
+            <Playlist
+              songs={songs}
+              playState={playState}
+              onClick={(index: number) =>
+                index === playState.index
+                  ? playState.playing
+                    ? pauseSong()
+                    : resumeSong()
+                  : dispatch(PLAY_SONG(index))
+              }
+            />
+          }
+        />
+
+        {/* <Slider
           value={range}
           onTouch={() => pauseSong()}
           onTouchEnd={() => resumeSong()}
           onChange={(v: number) => timeDrag(v)}
-        />
-        <Visualizer
+        /> */}
+        {/* <Visualizer
           width={size.width}
           audio={audioPlayer()}
           onError={() => nextSong()}
           playing={playState.playing}
           className="app__visualizer"
-        />
+        /> */}
         <div className="app__content">
           <input
+            hidden
             multiple
             type="file"
             accept="audio/mp3"
@@ -161,17 +179,6 @@ function App() {
             onEnded={() => handleSongEnd()}
             onTimeUpdate={() => updateTime()}
           ></audio>
-          <Paylist
-            songs={songs}
-            playState={playState}
-            onClick={(index: number) =>
-              index === playState.index
-                ? playState.playing
-                  ? pauseSong()
-                  : resumeSong()
-                : dispatch(PLAY_SONG(index))
-            }
-          />
         </div>
         <NowPlaying
           percent={range}

@@ -10,7 +10,7 @@ type PlaylistProps = {
   onClick: Function;
 };
 
-const Paylist = ({
+const Playlist = ({
   grid = false,
   songs,
   onClick,
@@ -39,4 +39,4 @@ const Paylist = ({
   );
 };
 
-export default Paylist;
+export default Playlist;
