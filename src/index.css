@@ -4,7 +4,8 @@
   --padding: 24px;
 
   --bg-color: #191b2d;
-  --bg-color-accent: #2e3253;
+  --bg-color-accent: #35395f;
+  --bg-color-accent-2: #20233a;
   --bg-color-secondary: #4a5085;
 
   --color-primary: rgba(255, 255, 255, 1);
@@ -12,6 +13,12 @@
   --color-disabled: rgba(255, 255, 255, 0.46);
 
   --box-shadow: 0px 1px 14px rgba(0, 0, 0, 0.6);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: none;
 }
 
 body {

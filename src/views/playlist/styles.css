@@ -1,4 +1,45 @@
 .playlist {
-  width: 100%;
+  width: calc(100% - calc(var(--padding) * 2));
+  --item-padding: calc(var(--padding) * 0.6);
   padding: var(--padding);
+}
+
+.playlist__item {
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  align-items: center;
+  margin-top: var(--padding);
+  box-shadow: var(--box-shadow);
+  background: var(--bg-color-accent-2);
+  border-radius: calc(var(--padding) / 2);
+  padding: var(--item-padding);
+}
+
+.playlist__item--selected {
+  background: var(--bg-color-accent);
+}
+
+.playlist__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  border-radius: 24px;
+  transition: background 0.3s ease;
+  background: var(--bg-color);
+  margin-right: var(--item-padding);
+}
+.playlist__icon:hover {
+  transition: background 0.3s ease;
+  background: var(--bg-color-secondary);
+}
+
+.playlist__name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: calc(100% - 56px);
 }

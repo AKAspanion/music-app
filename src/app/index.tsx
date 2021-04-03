@@ -6,7 +6,7 @@ import { useResize } from '../hooks';
 
 import { ADD_SONGS, PAUSE_SONG, PLAY_SONG, RESUME_SONG } from '../redux';
 import AudioSession from '../services/audio-session';
-import { NowPlaying, PLaylist } from '../views';
+import { NowPlaying, Paylist } from '../views';
 import './styles.css';
 
 function App() {
@@ -161,9 +161,16 @@ function App() {
             onEnded={() => handleSongEnd()}
             onTimeUpdate={() => updateTime()}
           ></audio>
-          <PLaylist
+          <Paylist
             songs={songs}
-            onClick={(index: number) => dispatch(PLAY_SONG(index))}
+            playState={playState}
+            onClick={(index: number) =>
+              index === playState.index
+                ? playState.playing
+                  ? pauseSong()
+                  : resumeSong()
+                : dispatch(PLAY_SONG(index))
+            }
           />
         </div>
         <NowPlaying
