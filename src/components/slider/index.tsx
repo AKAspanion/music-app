@@ -77,10 +77,11 @@ const Slider = ({
     let range: HTMLDivElement = rangeRef.current!;
 
     const rangeDimensions = range.getBoundingClientRect();
+    const bodyDimensions = document.body.getBoundingClientRect();
 
     const coords = {
-      x: position.x - rangeDimensions.top,
-      y: position.y - rangeDimensions.left,
+      x: position.x - (rangeDimensions.x - bodyDimensions.x),
+      y: position.y - (rangeDimensions.y - bodyDimensions.y),
     };
 
     const radius = rangeDimensions.width / 2;

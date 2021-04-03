@@ -84,7 +84,7 @@ function App() {
       if (!playing) {
         pause();
       } else if (index === -1) {
-        start(0);
+        dispatch(PLAY_SONG(0));
       } else if (index === prevIndex) {
         play();
       } else {
