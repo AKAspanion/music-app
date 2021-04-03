@@ -42,11 +42,11 @@
   border-radius: 50%;
   cursor: pointer;
   position: absolute;
-  background-color: #fff;
   will-change: transform;
   width: var(--dial-size);
   height: var(--dial-size);
-  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-primary);
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
   --dial-calc: calc(calc(var(--dial-size) / 2) * -0.5);
   transform: translate(
     var(--dial-calc),
@@ -79,6 +79,6 @@
   height: 200%;
   position: absolute;
   will-change: transform;
-  background-color: #42415a;
   transform-origin: top center;
+  background-color: var(--bg-color-secondary);
 }

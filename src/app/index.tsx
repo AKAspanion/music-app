@@ -6,7 +6,7 @@ import { useResize } from '../hooks';
 
 import { ADD_SONGS, PAUSE_SONG, PLAY_SONG, RESUME_SONG } from '../redux';
 import AudioSession from '../services/audio-session';
-import { NowPlaying } from '../views';
+import { NowPlaying, PLaylist } from '../views';
 import './styles.css';
 
 function App() {
@@ -161,21 +161,10 @@ function App() {
             onEnded={() => handleSongEnd()}
             onTimeUpdate={() => updateTime()}
           ></audio>
-          {songs.map(({ name }: any, index: number) => (
-            <div
-              key={index}
-              className="song-list-item"
-              onClick={() => dispatch(PLAY_SONG(index))}
-            >
-              {name}
-            </div>
-          ))}
-          <div className="button" onClick={() => pauseSong()}>
-            Pause
-          </div>
-          <div className="button" onClick={() => resumeSong()}>
-            Play
-          </div>
+          <PLaylist
+            songs={songs}
+            onClick={(index: number) => dispatch(PLAY_SONG(index))}
+          />
         </div>
         <NowPlaying
           percent={range}

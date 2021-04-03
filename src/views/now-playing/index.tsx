@@ -3,6 +3,7 @@ import './styles.css';
 
 import play from '../../assets/icons/play.svg';
 import pause from '../../assets/icons/pause.svg';
+import songIcon from '../../assets/icons/song.svg';
 
 type NowPlayingProps = {
   song?: any;
@@ -35,7 +36,12 @@ const NowPlaying = ({
   return (
     <div className={`nowplaying ${open ? 'nowplaying--open' : ''}`.trim()}>
       <div style={{ width }} className="nowplaying__container">
-        <div className="nowplaying__title">{songTitle()}</div>
+        <div className="nowplaying__title__wrapper">
+          <img className="nowplaying__title__icon" alt="song" src={songIcon} />
+          <div title={songTitle()} className="nowplaying__title">
+            {songTitle()}
+          </div>
+        </div>
         <div className="nowplaying__button">
           <Button
             onClick={() =>

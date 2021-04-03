@@ -1,3 +1,4 @@
+import PLaylist from './playlist';
 import NowPlaying from './now-playing';
 
-export { NowPlaying };
+export { PLaylist, NowPlaying };

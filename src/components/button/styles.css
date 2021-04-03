@@ -37,7 +37,6 @@
   width: calc(100% - var(--surround));
   height: calc(100% - var(--surround));
   font-size: calc(var(--button-size) / 2.5);
-  box-shadow: 0 0 10px red;
 }
 
 @keyframes animate {
