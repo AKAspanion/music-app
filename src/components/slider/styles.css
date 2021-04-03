@@ -64,8 +64,8 @@
   position: absolute;
   user-select: none;
   text-align: center;
-  background-color: #fff;
   text-transform: uppercase;
+  background-color: var(--bg-color);
   font: 400 16px/1.1 'Roboto', sans-serif;
   top: calc(calc(var(--dial-size) / 2));
   left: calc(calc(var(--dial-size) / 2));
@@ -79,6 +79,6 @@
   height: 200%;
   position: absolute;
   will-change: transform;
-  background-color: #eee;
+  background-color: #42415a;
   transform-origin: top center;
 }

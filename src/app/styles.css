@@ -1,24 +1,26 @@
-.song-list-item {
-  padding: 10px 8px;
-  font-size: 16px;
-  cursor: pointer;
-}
-.song-list-item:hover {
-  background: #cccccc;
-}
-
-.button {
-  width: 100px;
-  cursor: pointer;
-  margin-top: 20px;
-  padding: 10px 8px;
-  text-align: center;
-  border-radius: 2px;
-  background: #eeeeee;
-  text-transform: uppercase;
-  border: 1px solid #cecece;
+.app__wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  color: var(--color-primary);
+  background-color: var(--bg-color);
 }
 
-.button:hover {
-  background: #ffffff;
+.app__container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--padding);
+}
+
+.app__visualizer {
+  top: 40%;
+  position: absolute;
+}
+
+.app__content {
+  z-index: 2;
+  background: transparent;
 }

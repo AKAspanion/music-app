@@ -1,13 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Slider, Visualizer } from '../components';
+
+import { Slider, Visualizer } from '../components';
+import { useResize } from '../hooks';
 
 import { ADD_SONGS, PAUSE_SONG, PLAY_SONG, RESUME_SONG } from '../redux';
 import AudioSession from '../services/audio-session';
+import { NowPlaying } from '../views';
 import './styles.css';
 
 function App() {
   const prevPlayState = useRef({ playing: false, index: -1 });
+
+  const [ref, size] = useResize();
 
   const audio = useRef(null);
   const dispatch = useDispatch();
@@ -15,6 +20,8 @@ function App() {
   const songs = useSelector((state: any) => state.songs);
   const playState = useSelector((state: any) => state.playState);
   const [range, setRange] = useState<number>(0);
+
+  const isSongsThere = () => !!songs.length;
 
   const audioPlayer = (): HTMLAudioElement => audio.current!;
 
@@ -47,6 +54,7 @@ function App() {
           prev: () => prevSong(),
           play: () => resumeSong(),
           pause: () => pauseSong(),
+          stop: () => pauseSong(),
         });
       }
     } catch (error) {
@@ -55,29 +63,42 @@ function App() {
   };
 
   const nextSong = () => {
-    dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+    if (isSongsThere()) {
+      dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+    }
   };
 
   const prevSong = () => {
-    const prevIndex = playState.index - 1;
-    const index = prevIndex < 0 ? songs.length - 1 : prevIndex;
-    dispatch(PLAY_SONG(index));
+    if (isSongsThere()) {
+      const prevIndex = playState.index - 1;
+      const index = prevIndex < 0 ? songs.length - 1 : prevIndex;
+      dispatch(PLAY_SONG(index));
+    }
   };
 
   const pauseSong = () => {
-    dispatch(PAUSE_SONG());
+    if (isSongsThere()) {
+      dispatch(PAUSE_SONG());
+    }
   };
 
   const resumeSong = () => {
-    dispatch(RESUME_SONG());
+    if (isSongsThere()) {
+      dispatch(RESUME_SONG());
+    }
   };
 
   const handleSongEnd = () => {
-    nextSong();
+    if (isSongsThere()) {
+      nextSong();
+    }
   };
 
   useEffect(() => {
-    if (JSON.stringify(prevPlayState.current) !== JSON.stringify(playState)) {
+    if (
+      JSON.stringify(prevPlayState.current) !== JSON.stringify(playState) &&
+      isSongsThere()
+    ) {
       const { playing, index } = playState;
       const { index: prevIndex } = prevPlayState.current;
 
@@ -111,47 +132,52 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div style={{ padding: 50, background: '#191B2D' }}>
-        <Button />
-      </div>
-      <Slider
-        value={range}
-        onTouch={() => pauseSong()}
-        onTouchEnd={() => resumeSong()}
-        onChange={(v: number) => timeDrag(v)}
-      />
-      <Visualizer
-        audio={audioPlayer()}
-        playing={playState.playing}
-        onError={() => nextSong()}
-      />
-      <input
-        multiple
-        type="file"
-        accept="audio/mp3"
-        onChange={e => dispatch(ADD_SONGS(e.target.files))}
-      />
-      <audio
-        controls
-        ref={audio}
-        onEnded={() => handleSongEnd()}
-        onTimeUpdate={() => updateTime()}
-      ></audio>
-      {songs.map(({ name }: any, index: number) => (
-        <div
-          key={index}
-          className="song-list-item"
-          onClick={() => dispatch(PLAY_SONG(index))}
-        >
-          {name}
+    <div ref={ref} className="app__wrapper">
+      <div className="app__container">
+        <Slider
+          value={range}
+          onTouch={() => pauseSong()}
+          onTouchEnd={() => resumeSong()}
+          onChange={(v: number) => timeDrag(v)}
+        />
+        <Visualizer
+          width={size.width}
+          audio={audioPlayer()}
+          onError={() => nextSong()}
+          playing={playState.playing}
+          className="app__visualizer"
+        />
+        <div className="app__content">
+          <input
+            multiple
+            type="file"
+            accept="audio/mp3"
+            onChange={e => dispatch(ADD_SONGS(e.target.files))}
+          />
+          <audio
+            hidden
+            controls
+            ref={audio}
+            onEnded={() => handleSongEnd()}
+            onTimeUpdate={() => updateTime()}
+          ></audio>
+          {songs.map(({ name }: any, index: number) => (
+            <div
+              key={index}
+              className="song-list-item"
+              onClick={() => dispatch(PLAY_SONG(index))}
+            >
+              {name}
+            </div>
+          ))}
+          <div className="button" onClick={() => pauseSong()}>
+            Pause
+          </div>
+          <div className="button" onClick={() => resumeSong()}>
+            Play
+          </div>
         </div>
-      ))}
-      <div className="button" onClick={() => pauseSong()}>
-        Pause
-      </div>
-      <div className="button" onClick={() => resumeSong()}>
-        Play
+        <NowPlaying />
       </div>
     </div>
   );

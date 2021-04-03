@@ -64,6 +64,8 @@ export default class AudioSession {
         Navigator.mediaSession.setActionHandler('play', play);
 
         Navigator.mediaSession.setActionHandler('pause', pause);
+
+        Navigator.mediaSession.setActionHandler('stop', pause);
       }
     } catch (error) {
       console.error(error.message);

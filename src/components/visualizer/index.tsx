@@ -3,11 +3,24 @@ import { useRef, useLayoutEffect } from 'react';
 type VisualizerProps = {
   audio: HTMLAudioElement;
   onError?: Function;
+  className: string;
   playing: boolean;
+  width?: number;
 };
 
-const Visualizer = ({ audio, playing, onError }: VisualizerProps) => {
+let contextSetup = false;
+const Visualizer = ({
+  audio,
+  playing,
+  onError,
+  width = 400,
+  className = '',
+}: VisualizerProps) => {
   const canvasRef = useRef(null);
+
+  const canvasWidth = () => (width > 700 ? 700 : width);
+
+  const canvasHeight = () => 300;
 
   const visualize = () => {
     try {
@@ -25,8 +38,8 @@ const Visualizer = ({ audio, playing, onError }: VisualizerProps) => {
 
       source.connect(atx.destination);
 
-      const WIDTH = ca.width;
-      const HEIGHT = ca.height;
+      const WIDTH = 700;
+      const HEIGHT = 300;
 
       analyser.fftSize = 2048;
       var bufferLength = analyser.frequencyBinCount; // half the FFT value
@@ -70,7 +83,7 @@ const Visualizer = ({ audio, playing, onError }: VisualizerProps) => {
           x += sliceWidth;
         }
 
-        ctx.lineTo(ca.width, ca.height / 2);
+        ctx.lineTo(WIDTH, HEIGHT / 2);
         ctx.stroke();
       };
 
@@ -81,18 +94,22 @@ const Visualizer = ({ audio, playing, onError }: VisualizerProps) => {
   };
 
   useLayoutEffect(() => {
-    if (audio) {
-      visualize();
+    if (audio && playing) {
+      if (!contextSetup) {
+        visualize();
+        contextSetup = true;
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [audio]);
+  }, [audio, playing]);
 
   return (
     <canvas
       style={{ visibility: playing ? 'visible' : 'hidden' }}
+      height={canvasHeight()}
+      width={canvasWidth()}
+      className={className}
       ref={canvasRef}
-      height="300"
-      width="700"
     ></canvas>
   );
 };
