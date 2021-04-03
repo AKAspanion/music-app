@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Slider } from '../components';
+import { Button, Slider } from '../components';
 
 import { ADD_SONGS, PAUSE_SONG, PLAY_SONG, RESUME_SONG } from '../redux';
 import AudioSession from '../services/audio-session';
@@ -180,6 +180,9 @@ function App() {
 
   return (
     <div className="App">
+      <div style={{ padding: 50, background: '#191B2D' }}>
+        <Button />
+      </div>
       <Slider
         value={range}
         onTouch={() => pauseSong()}
