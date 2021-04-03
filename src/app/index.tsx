@@ -177,7 +177,14 @@ function App() {
             Play
           </div>
         </div>
-        <NowPlaying />
+        <NowPlaying
+          percent={range}
+          width={size.width}
+          playing={playState.playing}
+          song={songs[playState.index]}
+          onPlay={() => resumeSong()}
+          onPause={() => pauseSong()}
+        />
       </div>
     </div>
   );
