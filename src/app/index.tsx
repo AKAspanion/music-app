@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Header, Empty, Slider, Visualizer } from '../components';
+import { Header, Empty } from '../components';
 import { useResize } from '../hooks';
 
 import {
@@ -27,8 +27,20 @@ function App() {
 
   const songs = useSelector((state: any) => state.songs);
   const playState = useSelector((state: any) => state.playState);
+
   const [range, setRange] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
+  const [searchText, setSearchText] = useState('');
+
+  const filteredSongs = useCallback(() => {
+    if (!searchText) {
+      return songs;
+    } else {
+      return songs.filter((s: any) =>
+        s.name.toLowerCase().includes(searchText.toLowerCase()),
+      );
+    }
+  }, [searchText, songs]);
 
   const isSongsThere = () => !!songs.length;
 
@@ -145,7 +157,7 @@ function App() {
 
     setRange(Math.round(currentTime));
   };
-
+  // eslint-disable-next-line
   const timeDrag = (time: number) => {
     const range = audioPlayer().duration * (time / 100);
     if (!isNaN(range)) {
@@ -170,16 +182,23 @@ function App() {
         />
         <Menu show={showMenu} onClose={() => setShowMenu(false)} />
         <Home
+          showSearch={true}
+          onSearch={(e: string) => setSearchText(e)}
           playlist={
-            songs.length === 0 ? (
+            filteredSongs().length === 0 ? (
               <Empty
                 message="No songs found"
-                description="When you are ready, go ahead and add few songs"
+                description={
+                  searchText && songs.length > 0
+                    ? 'To widen your search, change or remove keyword'
+                    : 'When you are ready, go ahead and add few songs'
+                }
               />
             ) : (
               <Playlist
                 songs={songs}
                 playState={playState}
+                filteredSongs={filteredSongs()}
                 onDelete={(index: number) => deleteSong(index)}
                 onClick={(index: number) =>
                   index === playState.index

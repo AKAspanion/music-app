@@ -4,7 +4,7 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  height: calc(100% - var(--padding) * 2);
+  height: calc(100% - var(--padding) * 7);
   padding-bottom: calc(var(--padding) * 2);
 }
 

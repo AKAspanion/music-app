@@ -3,3 +3,8 @@
   overflow-y: auto;
   height: calc(100%);
 }
+
+.home__input {
+  padding: var(--padding);
+  padding-bottom: calc(var(--padding) / 4);
+}
