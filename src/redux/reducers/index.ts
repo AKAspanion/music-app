@@ -15,7 +15,7 @@ export const songReducer = (state = [], action: any) => {
       );
     }
     case T_REMOVE_SONGS: {
-      return state.filter((_, index) => index !== action.id);
+      return state.filter((_, index) => index !== action.index);
     }
     default: {
       return state;

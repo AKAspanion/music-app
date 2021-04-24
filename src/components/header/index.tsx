@@ -1,21 +1,30 @@
 import './styles.css';
 
-import back from '../../assets/icons/back.svg';
-import menu from '../../assets/icons/menu.svg';
+import more from '../../assets/icons/more.svg';
+import add from '../../assets/icons/add.svg';
 
-type HeaderProps = {};
+type HeaderProps = {
+  onLeftIconClick?: Function;
+  onRightIconClick?: Function;
+};
 
-const Header = ({}: HeaderProps) => {
+const Header = ({ onLeftIconClick, onRightIconClick }: HeaderProps) => {
   return (
     <div className="header">
       <div className="header__menu__left">
-        <div className="header__icon">
-          <img alt="close" src={back} />
+        <div
+          className="header__icon"
+          onClick={() => onLeftIconClick && onLeftIconClick()}
+        >
+          <img alt="close" src={more} />
         </div>
       </div>
       <div className="header__menu__right">
-        <div className="header__icon">
-          <img alt="close" src={menu} />
+        <div
+          className="header__icon"
+          onClick={() => onRightIconClick && onRightIconClick()}
+        >
+          <img alt="close" src={add} />
         </div>
       </div>
     </div>

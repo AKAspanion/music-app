@@ -41,5 +41,11 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: calc(100% - 56px);
+  width: calc(100% - 56px - 56px);
+}
+
+.playlist__icon--right {
+  margin-right: 0px;
+  background: transparent;
+  margin-left: var(--item-padding);
 }

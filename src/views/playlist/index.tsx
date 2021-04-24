@@ -2,18 +2,21 @@ import './styles.css';
 
 import play from '../../assets/icons/play.svg';
 import pause from '../../assets/icons/pause.svg';
+import del from '../../assets/icons/delete.svg';
 
 type PlaylistProps = {
   songs: any[];
   grid?: boolean;
   playState?: any;
-  onClick: Function;
+  onClick?: Function;
+  onDelete?: Function;
 };
 
 const Playlist = ({
   grid = false,
   songs,
   onClick,
+  onDelete,
   playState = {},
 }: PlaylistProps) => {
   const { index, playing } = playState;
@@ -32,6 +35,12 @@ const Playlist = ({
           </div>
           <div title={name} className="playlist__name">
             {name}
+          </div>
+          <div
+            className="playlist__icon playlist__icon--right"
+            onClick={() => onDelete && onDelete(i)}
+          >
+            <img alt="play" src={del} />
           </div>
         </div>
       ))}

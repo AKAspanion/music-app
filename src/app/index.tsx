@@ -4,7 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Header, Slider, Visualizer } from '../components';
 import { useResize } from '../hooks';
 
-import { ADD_SONGS, PAUSE_SONG, PLAY_SONG, RESUME_SONG } from '../redux';
+import {
+  ADD_SONGS,
+  DELETE_SONG,
+  PAUSE_SONG,
+  PLAY_SONG,
+  RESUME_SONG,
+} from '../redux';
 import AudioSession from '../services/audio-session';
 import { Home, NowPlaying, Playlist } from '../views';
 import './styles.css';
@@ -14,6 +20,7 @@ function App() {
 
   const [ref, size] = useResize();
 
+  const input = useRef(null);
   const audio = useRef(null);
   const dispatch = useDispatch();
 
@@ -58,8 +65,13 @@ function App() {
         });
       }
     } catch (error) {
-      console.log(error);
+      dispatch(PLAY_SONG(0));
     }
+  };
+
+  const stop = () => {
+    const htmlAudio: HTMLAudioElement = audioPlayer();
+    htmlAudio.src = '';
   };
 
   const nextSong = () => {
@@ -94,6 +106,11 @@ function App() {
     }
   };
 
+  const deleteSong = (index: number) => {
+    dispatch(PLAY_SONG(-2));
+    dispatch(DELETE_SONG(index));
+  };
+
   useEffect(() => {
     if (
       JSON.stringify(prevPlayState.current) !== JSON.stringify(playState) &&
@@ -108,6 +125,9 @@ function App() {
         dispatch(PLAY_SONG(0));
       } else if (index === prevIndex) {
         play();
+      } else if (index === -2) {
+        // stop song
+        stop();
       } else {
         start(index);
       }
@@ -131,15 +151,23 @@ function App() {
     }
   };
 
+  const addSongs = () => {
+    if (input.current) {
+      const filePicker: HTMLInputElement = input.current!;
+      filePicker.click();
+    }
+  };
+
   return (
     <div ref={ref} className="app__wrapper">
       <div className="app__container">
-        <Header />
+        <Header onRightIconClick={() => addSongs()} />
         <Home
           playlist={
             <Playlist
               songs={songs}
               playState={playState}
+              onDelete={(index: number) => deleteSong(index)}
               onClick={(index: number) =>
                 index === playState.index
                   ? playState.playing
@@ -169,6 +197,7 @@ function App() {
             hidden
             multiple
             type="file"
+            ref={input}
             accept="audio/mp3"
             onChange={e => dispatch(ADD_SONGS(e.target.files))}
           />
@@ -183,6 +212,7 @@ function App() {
         <NowPlaying
           percent={range}
           width={size.width}
+          open={playState.index > -1}
           playing={playState.playing}
           song={songs[playState.index]}
           onPlay={() => resumeSong()}
