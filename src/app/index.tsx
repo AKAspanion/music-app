@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Header, Slider, Visualizer } from '../components';
+import { Header, Empty, Slider, Visualizer } from '../components';
 import { useResize } from '../hooks';
 
 import {
@@ -13,6 +13,7 @@ import {
 } from '../redux';
 import AudioSession from '../services/audio-session';
 import { Home, NowPlaying, Playlist } from '../views';
+import Menu from '../views/menu';
 import './styles.css';
 
 function App() {
@@ -26,7 +27,8 @@ function App() {
 
   const songs = useSelector((state: any) => state.songs);
   const playState = useSelector((state: any) => state.playState);
-  const [range, setRange] = useState<number>(0);
+  const [range, setRange] = useState(0);
+  const [showMenu, setShowMenu] = useState(false);
 
   const isSongsThere = () => !!songs.length;
 
@@ -161,21 +163,33 @@ function App() {
   return (
     <div ref={ref} className="app__wrapper">
       <div className="app__container">
-        <Header onRightIconClick={() => addSongs()} />
+        <Header
+          title="playlist"
+          onRightIconClick={() => addSongs()}
+          onLeftIconClick={() => setShowMenu(!showMenu)}
+        />
+        <Menu show={showMenu} onClose={() => setShowMenu(false)} />
         <Home
           playlist={
-            <Playlist
-              songs={songs}
-              playState={playState}
-              onDelete={(index: number) => deleteSong(index)}
-              onClick={(index: number) =>
-                index === playState.index
-                  ? playState.playing
-                    ? pauseSong()
-                    : resumeSong()
-                  : dispatch(PLAY_SONG(index))
-              }
-            />
+            songs.length === 0 ? (
+              <Empty
+                message="No songs found"
+                description="When you are ready, go ahead and add few songs"
+              />
+            ) : (
+              <Playlist
+                songs={songs}
+                playState={playState}
+                onDelete={(index: number) => deleteSong(index)}
+                onClick={(index: number) =>
+                  index === playState.index
+                    ? playState.playing
+                      ? pauseSong()
+                      : resumeSong()
+                    : dispatch(PLAY_SONG(index))
+                }
+              />
+            )
           }
         />
 

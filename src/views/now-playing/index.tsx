@@ -1,9 +1,7 @@
 import { Button } from '../../components';
+import { BsMusicNote } from 'react-icons/bs';
+import { FaPause, FaPlay } from 'react-icons/fa';
 import './styles.css';
-
-import play from '../../assets/icons/play.svg';
-import pause from '../../assets/icons/pause.svg';
-import songIcon from '../../assets/icons/song.svg';
 
 type NowPlayingProps = {
   song?: any;
@@ -37,7 +35,7 @@ const NowPlaying = ({
     <div className={`nowplaying ${open ? 'nowplaying--open' : ''}`.trim()}>
       <div style={{ width }} className="nowplaying__container">
         <div className="nowplaying__title__wrapper">
-          <img className="nowplaying__title__icon" alt="song" src={songIcon} />
+          <BsMusicNote size={32} />
           <div title={songTitle()} className="nowplaying__title">
             {songTitle()}
           </div>
@@ -48,7 +46,7 @@ const NowPlaying = ({
               playing ? onPause && onPause() : onPlay && onPlay()
             }
           >
-            <img alt="play/pause" src={playing ? pause : play} />
+            {playing ? <FaPause size={18} /> : <FaPlay size={18} />}
           </Button>
         </div>
 

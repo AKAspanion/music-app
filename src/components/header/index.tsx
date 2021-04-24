@@ -1,32 +1,48 @@
 import './styles.css';
-
-import more from '../../assets/icons/more.svg';
-import add from '../../assets/icons/add.svg';
+import { FaCog, FaPlus } from 'react-icons/fa';
 
 type HeaderProps = {
+  size?: number;
+  title?: string;
+  leftIcon?: any;
+  rightIcon?: any;
   onLeftIconClick?: Function;
   onRightIconClick?: Function;
 };
 
-const Header = ({ onLeftIconClick, onRightIconClick }: HeaderProps) => {
+const Header = ({
+  size = 24,
+  title = '',
+  leftIcon,
+  rightIcon,
+  onLeftIconClick,
+  onRightIconClick,
+}: HeaderProps) => {
   return (
     <div className="header">
-      <div className="header__menu__left">
-        <div
-          className="header__icon"
-          onClick={() => onLeftIconClick && onLeftIconClick()}
-        >
-          <img alt="close" src={more} />
+      {leftIcon !== null && (
+        <div className="header__menu__left">
+          <div
+            className="header__icon"
+            onClick={() => onLeftIconClick && onLeftIconClick()}
+          >
+            {leftIcon || <FaCog size={size} />}
+          </div>
         </div>
-      </div>
-      <div className="header__menu__right">
-        <div
-          className="header__icon"
-          onClick={() => onRightIconClick && onRightIconClick()}
-        >
-          <img alt="close" src={add} />
+      )}
+      {leftIcon !== null && <div className="header__spacer"></div>}
+      <div className="header__title">{title}</div>
+      <div className="header__spacer"></div>
+      {rightIcon !== null && (
+        <div className="header__menu__right">
+          <div
+            className="header__icon"
+            onClick={() => onRightIconClick && onRightIconClick()}
+          >
+            {rightIcon || <FaPlus size={size} />}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

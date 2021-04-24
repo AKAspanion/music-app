@@ -1,0 +1,21 @@
+.menu {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  will-change: transform;
+  transform: translate3d(-120%, 0, 0);
+  background: var(--bg-color-secondary);
+  transition: transform 0.6s var(--transition);
+}
+
+.menu.menu--show {
+  transform: translate3d(0%, 0, 0);
+}
+
+.menu__content {
+  overflow-y: auto;
+  padding: var(--padding);
+  height: calc(100% - 88px - var(--padding));
+  padding-top: 0px;
+}

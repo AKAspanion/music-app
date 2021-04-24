@@ -6,10 +6,22 @@
   justify-content: space-between;
 }
 .header__menu__left {
-  padding-left: calc(var(--padding) * 1.15);
+  padding-left: calc(var(--padding) * 1);
 }
 .header__menu__right {
-  padding-right: calc(var(--padding) * 1.15);
+  padding-right: calc(var(--padding) * 1);
+}
+
+.header__spacer {
+  flex-grow: 1;
+}
+
+.header__title {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  padding: 0px var(--padding);
 }
 
 .header__icon {

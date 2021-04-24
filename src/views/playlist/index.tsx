@@ -1,8 +1,5 @@
 import './styles.css';
-
-import play from '../../assets/icons/play.svg';
-import pause from '../../assets/icons/pause.svg';
-import del from '../../assets/icons/delete.svg';
+import { FaPause, FaPlay, FaTrash } from 'react-icons/fa';
 
 type PlaylistProps = {
   songs: any[];
@@ -22,7 +19,11 @@ const Playlist = ({
   const { index, playing } = playState;
 
   return (
-    <div className={`playlist ${grid ? 'playlist--grid' : ''}`.trim()}>
+    <div
+      className={`playlist ${grid ? 'playlist--grid' : ''} ${
+        index > -1 ? 'playlist--bottom-padded' : ''
+      }`.trim()}
+    >
       {songs.map(({ name }: any, i: number) => (
         <div
           key={i}
@@ -31,7 +32,11 @@ const Playlist = ({
           }`}
         >
           <div className="playlist__icon" onClick={() => onClick && onClick(i)}>
-            <img alt="play" src={index === i && playing ? pause : play} />
+            {index === i && playing ? (
+              <FaPause size={18} />
+            ) : (
+              <FaPlay size={18} />
+            )}
           </div>
           <div title={name} className="playlist__name">
             {name}
@@ -40,7 +45,7 @@ const Playlist = ({
             className="playlist__icon playlist__icon--right"
             onClick={() => onDelete && onDelete(i)}
           >
-            <img alt="play" src={del} />
+            <FaTrash size={18} />
           </div>
         </div>
       ))}

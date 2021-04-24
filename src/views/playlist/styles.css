@@ -2,6 +2,12 @@
   width: calc(100% - calc(var(--padding) * 2));
   --item-padding: calc(var(--padding) * 0.6);
   padding: var(--padding);
+  padding-bottom: 0;
+  min-height: calc(100% - var(--padding));
+}
+
+.playlist--bottom-padded {
+  padding-bottom: calc(var(--padding) * 3.2);
 }
 
 .playlist__item {
@@ -39,8 +45,12 @@
 
 .playlist__name {
   overflow: hidden;
+  font-weight: 400;
+  user-select: none;
+  letter-spacing: 2px;
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-transform: uppercase;
   width: calc(100% - 56px - 56px);
 }
 
