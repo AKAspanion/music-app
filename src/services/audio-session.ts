@@ -1,6 +1,7 @@
 declare global {
   interface Window {
     MediaMetadata: any;
+    jsmediatags: any;
   }
 }
 
@@ -83,10 +84,10 @@ export default class AudioSession {
   static getMetadata = (song: Blob) =>
     new Promise<any>(resolve => {
       window.jsmediatags.read(song, {
-        onSuccess: function (tag) {
+        onSuccess: function (tag: any) {
           resolve(tag);
         },
-        onError: function (error) {
+        onError: function (error: any) {
           console.log(error);
           resolve({});
         },
