@@ -18,7 +18,8 @@
   background-size: 400%;
 }
 
-.button__wrapper:hover {
+.button__wrapper:hover,
+.button__wrapper.button__wrapper--active {
   animation: animate 8s linear infinite;
   transition: 0.3s;
 }

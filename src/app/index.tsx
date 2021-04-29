@@ -249,6 +249,12 @@ function App() {
           />
         ) : (
           <Track
+            playing={playState.playing}
+            onNext={() => nextSong()}
+            onPrev={() => prevSong()}
+            onPlay={() => resumeSong()}
+            onPause={() => pauseSong()}
+            song={songs[playState.index]}
             slider={
               <Slider
                 value={range}

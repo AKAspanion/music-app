@@ -4,4 +4,39 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: space-around;
+}
+
+.track__content {
+  z-index: 50;
+  width: 100%;
+}
+
+.track__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding);
+}
+
+.track__controls__btn {
+  cursor: pointer;
+  padding: 0 calc(var(--padding) / 1.5);
+}
+
+.track__details {
+  text-align: center;
+  padding: var(--padding);
+  text-transform: uppercase;
+}
+
+.track__details h1 {
+  margin: 0 auto;
+  font-size: 28px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  letter-spacing: 2px;
+  width: min(420px, 100%);
+  text-overflow: ellipsis;
 }

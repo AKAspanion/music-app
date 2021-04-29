@@ -38,3 +38,12 @@ export const setTheme = (light: boolean = false) => {
     });
   }
 };
+
+export const songTitle = (song: any) => {
+  let title = 'No title';
+  if (song && song.name) {
+    title = song.name;
+  }
+
+  return title.split('.')[0];
+};
