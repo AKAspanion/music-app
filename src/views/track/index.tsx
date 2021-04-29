@@ -1,11 +1,13 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FaPlay, FaPause } from 'react-icons/fa';
 import { BsFillSkipBackwardFill, BsFillSkipForwardFill } from 'react-icons/bs';
 import { RiShuffleFill, RiRepeat2Fill, RiRepeatOneFill } from 'react-icons/ri';
 
-import { useSelector } from 'react-redux';
+import AudioSession from '../../services/audio-session';
 import { Button } from '../../components';
-import './styles.css';
 import { songTitle } from '../../utils';
+import './styles.css';
 
 type TrackProps = {
   song?: any;
@@ -28,11 +30,24 @@ const Track = ({
   slider,
   visualizer,
 }: TrackProps) => {
+  const [meta, setMeta] = useState<any>(null);
+
   const settings = useSelector((state: any) => state.settings);
 
   const color = settings.light ? 'black' : 'white';
 
-  const title = songTitle(song);
+  const { tags = {} } = meta || {};
+
+  const title = tags.title ?? songTitle(song);
+  const artist = tags.artist ?? 'Unknown Artist';
+
+  useEffect(() => {
+    (async () => {
+      const meta = await AudioSession.getMetadata(song);
+
+      setMeta(meta);
+    })();
+  }, [song]);
 
   return (
     <div className="track">
@@ -40,7 +55,7 @@ const Track = ({
       <div className="track__content">
         <div className="track__details">
           <h1>{title}</h1>
-          <p></p>
+          <p>{artist}</p>
         </div>
         <div className="track__controls">
           <div className="track__controls__btn">

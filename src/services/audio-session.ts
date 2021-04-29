@@ -16,12 +16,12 @@ export default class AudioSession {
 
         const meta = await AudioSession.getMetadata(song);
 
-        const { year, artist, album } = meta.tags ?? {};
+        const { title, year, artist, album } = meta.tags ?? {};
 
         Navigator.mediaSession.metadata = new window.MediaMetadata({
-          title: song.name,
+          title: title ?? song.name,
           artist: artist ?? 'Unknown',
-          album: album ?? 'Unknown Albumn',
+          album: album ?? 'Unknown',
           year: year,
           artwork: [
             {

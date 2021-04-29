@@ -107,14 +107,24 @@ const Visualizer = ({
   };
 
   useLayoutEffect(() => {
+    const clearFrames = () => {
+      if (animationFrameRequestId) {
+        let id = animationFrameRequestId;
+        while (id--) {
+          cancelAnimationFrame(id);
+        }
+      }
+    };
+
     if (audio && playing) {
       const appColor = settings.light ? '#EDEEF4' : '#191C2D';
       const normalColor = settings.light ? '#BBBED9' : '#36395E';
 
       visualize(app ? appColor : normalColor);
+    } else {
+      clearFrames();
     }
 
-    return () => cancelAnimationFrame(Number(animationFrameRequestId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audio, playing, settings.light]);
 

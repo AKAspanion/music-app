@@ -28,6 +28,7 @@
   text-align: center;
   padding: var(--padding);
   text-transform: uppercase;
+  transition: all 0.3s ease;
 }
 
 .track__details h1 {
