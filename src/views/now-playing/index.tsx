@@ -64,13 +64,13 @@ const NowPlaying = ({
         </div>
 
         <div
-          style={{ width: `${percent}%` }}
+          style={{ width: `${100 - Number(percent)}%` }}
           className="nowplaying__progress"
         ></div>
+        <div className="nowplaying__progress__placeholder"></div>
         <div className="nowplaying__visualizer">
           {settings.visualizer && visualizer}
         </div>
-        <div className="nowplaying__progress__bg"></div>
       </div>
     </div>
   );

@@ -40,6 +40,7 @@
 }
 
 .nowplaying__title {
+  cursor: pointer;
   overflow: hidden;
   font-size: 20px;
   white-space: nowrap;
@@ -58,7 +59,7 @@
 }
 
 .nowplaying__progress,
-.nowplaying__progress__bg {
+.nowplaying__progress__placeholder {
   bottom: 0;
   height: 4px;
   width: inherit;
@@ -74,13 +75,13 @@
 }
 
 .nowplaying__progress {
-  z-index: 3;
+  z-index: 4;
+  right: 0;
   max-width: 650px;
-}
-
-.nowplaying__progress__bg {
-  z-index: 2;
   background: var(--bg-color);
+}
+.nowplaying__progress__placeholder {
+  z-index: 3;
 }
 
 .nowplaying__icon {

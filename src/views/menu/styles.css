@@ -15,7 +15,6 @@
 
 .menu__content {
   overflow-y: auto;
-  padding: var(--padding);
   height: calc(100% - 88px - var(--padding));
 }
 
@@ -24,8 +23,11 @@
   flex-wrap: nowrap;
   cursor: pointer;
   align-items: center;
-  padding: var(--padding) 0px;
-  padding-right: calc(var(--padding) / 2);
+  padding: var(--padding);
+  padding-right: calc(var(--padding) * 1.5);
+}
+.menu__item:hover {
+  background-color: var(--bg-color-accent);
 }
 
 .menu__item__icon {
@@ -35,14 +37,14 @@
 .menu__item__name {
   font-size: 18px;
   overflow: hidden;
-  font-weight: bold;
+  font-weight: 500;
   user-select: none;
   white-space: nowrap;
   letter-spacing: 2px;
   text-overflow: ellipsis;
   text-transform: uppercase;
   padding: 0px var(--padding) 0px 0px;
-  width: calc(100% - 32px - 24px - var(--padding) * 2);
+  width: calc(100% - 32px - var(--padding) * 2);
 }
 
 .menu__item--spacer {

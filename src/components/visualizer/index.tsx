@@ -13,6 +13,7 @@ type VisualizerProps = {
 
 let atx: AudioContext | undefined;
 let source: MediaElementAudioSourceNode | undefined;
+let animationFrameRequestId: number | undefined;
 const Visualizer = ({
   audio,
   playing,
@@ -66,7 +67,7 @@ const Visualizer = ({
       };
 
       const draw = () => {
-        requestAnimationFrame(draw);
+        animationFrameRequestId = requestAnimationFrame(draw);
 
         analyser.getByteTimeDomainData(dataArray); // get waveform data and put it into the array created above
 
@@ -113,6 +114,7 @@ const Visualizer = ({
       visualize(app ? appColor : normalColor);
     }
 
+    return () => cancelAnimationFrame(Number(animationFrameRequestId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audio, playing, settings.light]);
 
