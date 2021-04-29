@@ -25,7 +25,6 @@
   align-items: center;
   padding: var(--padding-here) 0px;
   justify-content: space-between;
-  box-shadow: var(--box-shadow);
   background: var(--bg-color-accent);
   padding-top: calc(var(--padding-here) - 2px);
   border-radius: var(--padding) var(--padding) 0 0;

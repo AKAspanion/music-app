@@ -4,7 +4,6 @@
   display: flex;
   align-items: center;
   background: var(--here-bg);
-  box-shadow: var(--box-shadow);
   justify-content: space-between;
   transition: all 0.5s var(--transition);
   border-radius: calc(var(--padding) / 2);

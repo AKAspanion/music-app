@@ -12,10 +12,6 @@
   --color-secondary: rgba(255, 255, 255, 0.78);
   --color-disabled: rgba(255, 255, 255, 0.46);
 
-  --box-shadow: 0 0px 0.8px rgba(0, 0, 0, 0.029),
-    0 0px 1.9px rgba(0, 0, 0, 0.041), 0 0px 3.5px rgba(0, 0, 0, 0.048),
-    0 0px 5.8px rgba(0, 0, 0, 0.053), 0 0px 9.5px rgba(0, 0, 0, 0.056),
-    0 0px 16.6px rgba(0, 0, 0, 0.058), 0 0px 36px rgba(0, 0, 0, 0.06);
   --transition: cubic-bezier(0.62, 0.44, 0, 1);
 }
 

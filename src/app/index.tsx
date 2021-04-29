@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BsMusicNoteBeamed } from 'react-icons/bs';
 import { FaChevronLeft } from 'react-icons/fa';
@@ -16,6 +16,7 @@ import {
 
 import AudioSession from '../services/audio-session';
 import { Track, Menu, Home, NowPlaying, Playlist } from '../views';
+import { setTheme } from '../utils';
 import './styles.css';
 
 function App() {
@@ -35,6 +36,8 @@ function App() {
   const [view, setView] = useState('home');
   const [showMenu, setShowMenu] = useState(false);
   const [searchText, setSearchText] = useState('');
+
+  useMemo(() => setTheme(settings.light), [settings.light]);
 
   const filteredSongs = useCallback(() => {
     if (!searchText) {
@@ -179,12 +182,12 @@ function App() {
   const visualize = (app: boolean) => {
     return (
       <Visualizer
+        app={app}
         width={size.width}
         audio={audioPlayer()}
         onError={() => nextSong()}
         playing={playState.playing}
         short={app ? undefined : 10}
-        fill={app ? '#191B2D' : undefined}
         className={app ? 'app__visualizer' : ''}
       />
     );

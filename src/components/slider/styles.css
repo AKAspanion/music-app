@@ -45,7 +45,7 @@
   will-change: transform;
   width: var(--dial-size);
   height: var(--dial-size);
-  background-color: var(--color-primary);
+  background-color: white;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
   --dial-calc: calc(calc(var(--dial-size) / 2) * -0.5);
   transform: translate(

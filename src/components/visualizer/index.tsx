@@ -1,4 +1,5 @@
-import { useRef, useLayoutEffect, useState } from 'react';
+import { useRef, useLayoutEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 type VisualizerProps = {
   audio: HTMLAudioElement;
@@ -7,7 +8,7 @@ type VisualizerProps = {
   playing: boolean;
   width?: number;
   short?: number;
-  fill?: string;
+  app?: boolean;
 };
 
 let atx: AudioContext | undefined;
@@ -17,18 +18,19 @@ const Visualizer = ({
   playing,
   onError,
   short = 2,
+  app = true,
   width = 400,
   className = '',
-  fill = '#36395E',
 }: VisualizerProps) => {
+  const settings = useSelector((state: any) => state.settings);
+
   const canvasRef = useRef(null);
-  const [contextSetup, setContextSetup] = useState(false);
 
   const canvasWidth = () => (width > 700 ? 700 : width);
 
   const canvasHeight = () => 300;
 
-  const visualize = () => {
+  const visualize = (fillValue: string) => {
     try {
       const ca: any = canvasRef.current!;
       const ctx: CanvasRenderingContext2D = ca.getContext('2d');
@@ -68,7 +70,7 @@ const Visualizer = ({
 
         analyser.getByteTimeDomainData(dataArray); // get waveform data and put it into the array created above
 
-        ctx.fillStyle = fill; // draw wave with canvas
+        ctx.fillStyle = fillValue ?? '#36395E'; // draw wave with canvas
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
         ctx.lineWidth = 2;
@@ -105,14 +107,14 @@ const Visualizer = ({
 
   useLayoutEffect(() => {
     if (audio && playing) {
-      if (!contextSetup) {
-        visualize();
-        setContextSetup(true);
-      }
+      const appColor = settings.light ? '#EDEEF4' : '#191C2D';
+      const normalColor = settings.light ? '#BBBED9' : '#36395E';
+
+      visualize(app ? appColor : normalColor);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [audio, playing]);
+  }, [audio, playing, settings.light]);
 
   return (
     <canvas
