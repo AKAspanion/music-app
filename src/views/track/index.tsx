@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaPlay, FaPause } from 'react-icons/fa';
 import { BsFillSkipBackwardFill, BsFillSkipForwardFill } from 'react-icons/bs';
-import { RiShuffleFill, RiRepeat2Fill, RiRepeatOneFill } from 'react-icons/ri';
+import { RiShuffleFill, RiRepeat2Fill } from 'react-icons/ri';
+// RiRepeatOneFill
 
 import AudioSession from '../../services/audio-session';
 import { Button } from '../../components';
