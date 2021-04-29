@@ -129,7 +129,10 @@ function App() {
 
   const deleteSong = (index: number) => {
     dispatch(PLAY_SONG(-2));
-    dispatch(DELETE_SONG(index));
+
+    setTimeout(() => {
+      dispatch(DELETE_SONG(index));
+    }, 100);
   };
 
   useEffect(() => {
@@ -147,7 +150,6 @@ function App() {
       } else if (index === prevIndex) {
         play();
       } else if (index === -2) {
-        // stop song
         stop();
       } else {
         start(index);

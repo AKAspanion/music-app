@@ -20,6 +20,11 @@ const Slider = ({
   onTouch,
   onTouchEnd,
 }: SliderProps) => {
+  const isTouchDevice =
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    navigator.msMaxTouchPoints > 0;
+
   const dialRef = useRef(null);
   const rangeRef = useRef(null);
   const blockerRef = useRef(null);
@@ -72,8 +77,6 @@ const Slider = ({
 
   const onSliderMove = (e: any) => {
     if (!canSlide) return;
-
-    e.preventDefault();
 
     let position = getPosition(e);
     let range: HTMLDivElement = rangeRef.current!;
@@ -134,12 +137,12 @@ const Slider = ({
     <div
       ref={rangeRef}
       className="slider"
-      onMouseUp={e => onSliderStop(e)}
-      onTouchEnd={e => onSliderStop(e)}
-      onMouseMove={e => onSliderMove(e)}
-      onTouchMove={e => onSliderMove(e)}
-      onMouseDown={e => onSliderInit(e)}
-      onTouchStart={e => onSliderInit(e)}
+      onMouseUp={e => !isTouchDevice && onSliderStop(e)}
+      onTouchEnd={e => isTouchDevice && onSliderStop(e)}
+      onMouseMove={e => !isTouchDevice && onSliderMove(e)}
+      onTouchMove={e => isTouchDevice && onSliderMove(e)}
+      onMouseDown={e => !isTouchDevice && onSliderInit(e)}
+      onTouchStart={e => isTouchDevice && onSliderInit(e)}
       style={{ '--size': `${size}px`, '--dial-size': `${size / 10}px` } as any}
     >
       <input type="range" min="0" max="100" className="slider__range"></input>
