@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import './styles.css';
 
 type TrackProps = {
@@ -6,10 +7,12 @@ type TrackProps = {
 };
 
 const Track = ({ slider, visualizer }: TrackProps) => {
+  const settings = useSelector((state: any) => state.settings);
+
   return (
     <div className="track">
       {slider}
-      {visualizer}
+      {settings.visualizer && visualizer}
     </div>
   );
 };

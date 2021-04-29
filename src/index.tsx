@@ -29,9 +29,12 @@ const WINDOW = window as any;
         WINDOW.__REDUX_DEVTOOLS_EXTENSION__(),
     );
 
+    console.log(store.getState());
+
     store.subscribe(() => {
       DataStore.set('state', {
         songs: store.getState().songs,
+        settings: store.getState().settings,
       });
     });
 

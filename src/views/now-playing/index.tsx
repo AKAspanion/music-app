@@ -1,6 +1,8 @@
-import { Button } from '../../components';
+import { useSelector } from 'react-redux';
 import { BsMusicNote } from 'react-icons/bs';
 import { FaPause, FaPlay } from 'react-icons/fa';
+
+import { Button } from '../../components';
 import './styles.css';
 
 type NowPlayingProps = {
@@ -26,6 +28,8 @@ const NowPlaying = ({
   width = 300,
   visualizer,
 }: NowPlayingProps) => {
+  const settings = useSelector((state: any) => state.settings);
+
   const songTitle = () => {
     let title = 'No title';
     if (song && song.name) {
@@ -63,7 +67,9 @@ const NowPlaying = ({
           style={{ width: `${percent}%` }}
           className="nowplaying__progress"
         ></div>
-        <div className="nowplaying__visualizer">{visualizer}</div>
+        <div className="nowplaying__visualizer">
+          {settings.visualizer && visualizer}
+        </div>
         <div className="nowplaying__progress__bg"></div>
       </div>
     </div>
