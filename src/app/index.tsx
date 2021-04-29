@@ -28,6 +28,7 @@ function App() {
   const dispatch = useDispatch();
 
   const songs = useSelector((state: any) => state.songs);
+  const settings = useSelector((state: any) => state.settings);
   const playState = useSelector((state: any) => state.playState);
 
   const [range, setRange] = useState(0);
@@ -227,8 +228,8 @@ function App() {
                 />
               ) : (
                 <Playlist
-                  grid
                   songs={songs}
+                  grid={settings.grid}
                   playState={playState}
                   filteredSongs={filteredSongs()}
                   onDelete={(index: number) => deleteSong(index)}

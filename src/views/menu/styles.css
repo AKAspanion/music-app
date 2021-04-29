@@ -17,5 +17,34 @@
   overflow-y: auto;
   padding: var(--padding);
   height: calc(100% - 88px - var(--padding));
-  padding-top: 0px;
+}
+
+.menu__item {
+  display: flex;
+  flex-wrap: nowrap;
+  cursor: pointer;
+  align-items: center;
+  padding: var(--padding) 0px;
+  padding-right: calc(var(--padding) / 2);
+}
+
+.menu__item__icon {
+  height: 32px;
+}
+
+.menu__item__name {
+  font-size: 18px;
+  overflow: hidden;
+  font-weight: bold;
+  user-select: none;
+  white-space: nowrap;
+  letter-spacing: 2px;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  padding: 0px var(--padding) 0px 0px;
+  width: calc(100% - 32px - 24px - var(--padding) * 2);
+}
+
+.menu__item--spacer {
+  flex-grow: 1;
 }

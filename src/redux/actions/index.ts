@@ -4,6 +4,9 @@ import {
   T_PAUSE_SONG,
   T_RESUME_SONG,
   T_REMOVE_SONGS,
+  T_SET_GRID,
+  T_SET_THEME,
+  T_SET_VISUALIZER,
 } from '../types';
 
 export const ADD_SONGS = (songs: any) => ({
@@ -27,4 +30,19 @@ export const PAUSE_SONG = () => ({
 
 export const RESUME_SONG = () => ({
   type: T_RESUME_SONG,
+});
+
+export const SET_GRID = (value: boolean) => ({
+  type: T_SET_GRID,
+  value,
+});
+
+export const SET_VISUALIZER = (value: boolean) => ({
+  type: T_SET_VISUALIZER,
+  value,
+});
+
+export const SET_THEME = (value: boolean) => ({
+  type: T_SET_THEME,
+  value,
 });
