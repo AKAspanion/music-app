@@ -1,5 +1,6 @@
 .nowplaying {
   bottom: 0;
+  z-index: 3;
   display: flex;
   margin: 0px auto;
   position: absolute;
@@ -18,6 +19,8 @@
 .nowplaying__container {
   width: 100%;
   display: flex;
+  overflow: hidden;
+  position: relative;
   max-width: 650px;
   align-items: center;
   padding: var(--padding-here) 0px;
@@ -29,6 +32,7 @@
 }
 
 .nowplaying__title__wrapper {
+  z-index: 1;
   display: flex;
   font-weight: 500;
   align-items: center;
@@ -78,4 +82,14 @@
 .nowplaying__progress__bg {
   z-index: 2;
   background: var(--bg-color);
+}
+
+.nowplaying__icon {
+  min-width: 32px;
+}
+
+.nowplaying__visualizer {
+  position: absolute;
+  z-index: 0;
+  top: 10px;
 }

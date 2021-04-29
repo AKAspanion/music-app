@@ -1,19 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { BsMusicNoteBeamed } from 'react-icons/bs';
+import { FaChevronLeft } from 'react-icons/fa';
 
-import { Header, Empty } from '../components';
+import { Header, Empty, Slider, Visualizer } from '../components';
 import { useResize } from '../hooks';
 
 import {
   ADD_SONGS,
-  DELETE_SONG,
-  PAUSE_SONG,
   PLAY_SONG,
+  PAUSE_SONG,
   RESUME_SONG,
+  DELETE_SONG,
 } from '../redux';
+
 import AudioSession from '../services/audio-session';
-import { Home, NowPlaying, Playlist } from '../views';
-import Menu from '../views/menu';
+import { Track, Menu, Home, NowPlaying, Playlist } from '../views';
 import './styles.css';
 
 function App() {
@@ -29,6 +31,7 @@ function App() {
   const playState = useSelector((state: any) => state.playState);
 
   const [range, setRange] = useState(0);
+  const [view, setView] = useState('home');
   const [showMenu, setShowMenu] = useState(false);
   const [searchText, setSearchText] = useState('');
 
@@ -172,59 +175,94 @@ function App() {
     }
   };
 
+  const visualize = (app: boolean) => {
+    return (
+      <Visualizer
+        width={size.width}
+        audio={audioPlayer()}
+        onError={() => nextSong()}
+        playing={playState.playing}
+        short={app ? undefined : 10}
+        fill={app ? '#191B2D' : undefined}
+        className={app ? 'app__visualizer' : ''}
+      />
+    );
+  };
+
   return (
     <div ref={ref} className="app__wrapper">
       <div className="app__container">
-        <Header
-          title="playlist"
-          onRightIconClick={() => addSongs()}
-          onLeftIconClick={() => setShowMenu(!showMenu)}
-        />
+        {view === 'home' ? (
+          <Header
+            title="playlist"
+            onRightIconClick={() => addSongs()}
+            onLeftIconClick={() => setShowMenu(!showMenu)}
+          />
+        ) : (
+          <Header
+            title="Track"
+            rightIcon={null}
+            leftIcon={
+              <div style={{ transform: 'translateX(-2px)' }}>
+                <FaChevronLeft size={24} />
+              </div>
+            }
+            onLeftIconClick={() => setView('home')}
+          />
+        )}
         <Menu show={showMenu} onClose={() => setShowMenu(false)} />
-        <Home
-          showSearch={true}
-          onSearch={(e: string) => setSearchText(e)}
-          playlist={
-            filteredSongs().length === 0 ? (
-              <Empty
-                message="No songs found"
-                description={
-                  searchText && songs.length > 0
-                    ? 'To widen your search, change or remove keyword'
-                    : 'When you are ready, go ahead and add few songs'
-                }
-              />
-            ) : (
-              <Playlist
-                songs={songs}
-                playState={playState}
-                filteredSongs={filteredSongs()}
-                onDelete={(index: number) => deleteSong(index)}
-                onClick={(index: number) =>
-                  index === playState.index
-                    ? playState.playing
-                      ? pauseSong()
-                      : resumeSong()
-                    : dispatch(PLAY_SONG(index))
-                }
-              />
-            )
-          }
-        />
+        {view === 'home' ? (
+          <Home
+            showSearch={true}
+            onSearch={(e: string) => setSearchText(e)}
+            playlist={
+              filteredSongs().length === 0 ? (
+                <Empty
+                  message="No songs found"
+                  description={
+                    searchText && songs.length > 0
+                      ? 'To widen your search, change or remove keyword'
+                      : 'When you are ready, go ahead and add few songs'
+                  }
+                />
+              ) : (
+                <Playlist
+                  grid
+                  songs={songs}
+                  playState={playState}
+                  filteredSongs={filteredSongs()}
+                  onDelete={(index: number) => deleteSong(index)}
+                  onClick={(index: number) =>
+                    index === playState.index
+                      ? playState.playing
+                        ? pauseSong()
+                        : resumeSong()
+                      : dispatch(PLAY_SONG(index))
+                  }
+                />
+              )
+            }
+          />
+        ) : (
+          <Track
+            slider={
+              <Slider
+                value={range}
+                onTouch={() => pauseSong()}
+                onTouchEnd={() => resumeSong()}
+                onChange={(v: number) => timeDrag(v)}
+              >
+                <div className="app__slider__img">
+                  <div style={{ transform: 'translateX(-6px)' }}>
+                    <BsMusicNoteBeamed size={108} />
+                  </div>
+                </div>
+              </Slider>
+            }
+            visualizer={visualize(true)}
+          />
+        )}
 
-        {/* <Slider
-          value={range}
-          onTouch={() => pauseSong()}
-          onTouchEnd={() => resumeSong()}
-          onChange={(v: number) => timeDrag(v)}
-        /> */}
-        {/* <Visualizer
-          width={size.width}
-          audio={audioPlayer()}
-          onError={() => nextSong()}
-          playing={playState.playing}
-          className="app__visualizer"
-        /> */}
         <div className="app__content">
           <input
             hidden
@@ -245,11 +283,13 @@ function App() {
         <NowPlaying
           percent={range}
           width={size.width}
-          open={playState.index > -1}
           playing={playState.playing}
           song={songs[playState.index]}
           onPlay={() => resumeSong()}
           onPause={() => pauseSong()}
+          onClick={() => setView('track')}
+          open={view === 'home' && playState.index > -1}
+          visualizer={visualize(false)}
         />
       </div>
     </div>

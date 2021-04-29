@@ -3,11 +3,16 @@ import { FaSearch } from 'react-icons/fa';
 import './styles.css';
 
 type InputProps = {
+  type?: string;
   onChange?: Function;
   placeholder?: string;
 };
 
-const Input = ({ onChange, placeholder = 'Search...' }: InputProps) => {
+const Input = ({
+  onChange,
+  type = 'text',
+  placeholder = 'Search...',
+}: InputProps) => {
   const [inFocus, setFocus] = useState(false);
   return (
     <div
@@ -16,6 +21,7 @@ const Input = ({ onChange, placeholder = 'Search...' }: InputProps) => {
       }`.trim()}
     >
       <input
+        type={type}
         placeholder={placeholder}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}

@@ -1,22 +1,28 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useLayoutEffect, useState } from 'react';
 
 type VisualizerProps = {
   audio: HTMLAudioElement;
   onError?: Function;
-  className: string;
+  className?: string;
   playing: boolean;
   width?: number;
+  short?: number;
+  fill?: string;
 };
 
-let contextSetup = false;
+let atx: AudioContext | undefined;
+let source: MediaElementAudioSourceNode | undefined;
 const Visualizer = ({
   audio,
   playing,
   onError,
+  short = 2,
   width = 400,
   className = '',
+  fill = '#36395E',
 }: VisualizerProps) => {
   const canvasRef = useRef(null);
+  const [contextSetup, setContextSetup] = useState(false);
 
   const canvasWidth = () => (width > 700 ? 700 : width);
 
@@ -27,12 +33,16 @@ const Visualizer = ({
       const ca: any = canvasRef.current!;
       const ctx: CanvasRenderingContext2D = ca.getContext('2d');
 
-      const atx: AudioContext = new AudioContext();
+      if (atx === undefined) {
+        atx = new AudioContext();
+      }
       const analyser: AnalyserNode = atx.createAnalyser();
 
       analyser.fftSize = 2048;
 
-      const source = atx.createMediaElementSource(audio);
+      if (source === undefined) {
+        source = atx.createMediaElementSource(audio);
+      }
 
       source.connect(analyser);
 
@@ -58,7 +68,7 @@ const Visualizer = ({
 
         analyser.getByteTimeDomainData(dataArray); // get waveform data and put it into the array created above
 
-        ctx.fillStyle = '#191B2D'; // draw wave with canvas
+        ctx.fillStyle = fill; // draw wave with canvas
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
         ctx.lineWidth = 2;
@@ -70,7 +80,7 @@ const Visualizer = ({
 
         for (var i = 0; i < bufferLength; i++) {
           var v = dataArray[i] / 128.0;
-          var y = (v * HEIGHT) / 2;
+          var y = (v * HEIGHT) / short;
 
           ctx.strokeStyle = color();
 
@@ -97,9 +107,10 @@ const Visualizer = ({
     if (audio && playing) {
       if (!contextSetup) {
         visualize();
-        contextSetup = true;
+        setContextSetup(true);
       }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [audio, playing]);
 

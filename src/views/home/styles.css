@@ -6,5 +6,6 @@
 
 .home__input {
   padding: var(--padding);
+  padding-top: calc(var(--padding) / 4);
   padding-bottom: calc(var(--padding) / 4);
 }

@@ -43,6 +43,7 @@ const Header = ({
           </div>
         </div>
       )}
+      {rightIcon === null && <div style={{ width: 72 }}></div>}
     </div>
   );
 };

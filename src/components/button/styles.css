@@ -66,6 +66,6 @@
 .button__wrapper:hover:before {
   opacity: 1;
   transition: 0.3s;
-  filter: blur(12px);
+  filter: blur(8px);
   animation: animate 8s linear infinite;
 }

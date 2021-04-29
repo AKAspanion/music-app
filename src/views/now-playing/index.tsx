@@ -10,17 +10,21 @@ type NowPlayingProps = {
   playing: boolean;
   onPlay?: Function;
   onPause?: Function;
+  onClick?: Function;
   percent?: number;
+  visualizer?: React.ReactNode;
 };
 
 const NowPlaying = ({
   song,
   onPlay,
   onPause,
+  onClick,
   percent,
   playing,
   open = true,
   width = 300,
+  visualizer,
 }: NowPlayingProps) => {
   const songTitle = () => {
     let title = 'No title';
@@ -34,8 +38,13 @@ const NowPlaying = ({
   return (
     <div className={`nowplaying ${open ? 'nowplaying--open' : ''}`.trim()}>
       <div style={{ width }} className="nowplaying__container">
-        <div className="nowplaying__title__wrapper">
-          <BsMusicNote size={32} />
+        <div
+          onClick={() => onClick && onClick()}
+          className="nowplaying__title__wrapper"
+        >
+          <div className="nowplaying__icon">
+            <BsMusicNote size={32} />
+          </div>
           <div title={songTitle()} className="nowplaying__title">
             {songTitle()}
           </div>
@@ -54,6 +63,7 @@ const NowPlaying = ({
           style={{ width: `${percent}%` }}
           className="nowplaying__progress"
         ></div>
+        <div className="nowplaying__visualizer">{visualizer}</div>
         <div className="nowplaying__progress__bg"></div>
       </div>
     </div>

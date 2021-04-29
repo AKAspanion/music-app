@@ -7,6 +7,7 @@ type SliderProps = {
   onChange?: Function;
   onTouch?: Function;
   onTouchEnd?: Function;
+  children?: React.ReactNode;
 };
 
 let prevDeg: number = 0;
@@ -14,6 +15,7 @@ let prevDeg: number = 0;
 const Slider = ({
   value = 0,
   size = 240,
+  children,
   onChange,
   onTouch,
   onTouchEnd,
@@ -144,8 +146,10 @@ const Slider = ({
       <div className="slider__track">
         <div className="slider__blocker" ref={blockerRef}></div>
       </div>
-      <div className="slider__info"></div>
+      <div className="slider__info">{children}</div>
       <div className="slider__dial" tabIndex={0} ref={dialRef}></div>
+      <div className="slider__start"></div>
+      <div className="slider__end"></div>
     </div>
   );
 };

@@ -59,6 +59,9 @@
 
 .slider__info {
   z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: default;
   border-radius: 50%;
   position: absolute;
@@ -81,4 +84,21 @@
   will-change: transform;
   transform-origin: top center;
   background-color: var(--bg-color-secondary);
+}
+
+.slider__end,
+.slider__start {
+  z-index: 0;
+  position: absolute;
+  background: #833ab4;
+  border-radius: 50% 50% 0 0;
+  width: calc(var(--dial-size) / 2);
+  height: calc(var(--dial-size) / 2);
+  top: calc(50% - var(--dial-size) / 4.1);
+  clip-path: polygon(0 0, 120% 0%, 120% 50%, 0 50%);
+}
+
+.slider__start {
+  background-color: var(--bg-color-secondary);
+  right: 0;
 }
