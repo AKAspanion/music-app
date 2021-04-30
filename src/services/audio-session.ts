@@ -19,6 +19,8 @@ export default class AudioSession {
 
         const { title, year, artist, album } = meta.tags ?? {};
 
+        const picture = AudioSession.getPicture(meta);
+
         Navigator.mediaSession.metadata = new window.MediaMetadata({
           title: title ?? song.name,
           artist: artist ?? 'Unknown',
@@ -26,32 +28,32 @@ export default class AudioSession {
           year: year,
           artwork: [
             {
-              src: AudioSession.getPicture(meta),
+              src: picture,
               sizes: '96x96',
               type: 'image/png',
             },
             {
-              src: AudioSession.getPicture(meta),
+              src: picture,
               sizes: '128x128',
               type: 'image/png',
             },
             {
-              src: AudioSession.getPicture(meta),
+              src: picture,
               sizes: '192x192',
               type: 'image/png',
             },
             {
-              src: AudioSession.getPicture(meta),
+              src: picture,
               sizes: '256x256',
               type: 'image/png',
             },
             {
-              src: AudioSession.getPicture(meta),
+              src: picture,
               sizes: '384x384',
               type: 'image/png',
             },
             {
-              src: AudioSession.getPicture(meta),
+              src: picture,
               sizes: '512x512',
               type: 'image/png',
             },
