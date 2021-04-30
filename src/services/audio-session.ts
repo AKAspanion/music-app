@@ -26,32 +26,32 @@ export default class AudioSession {
           year: year,
           artwork: [
             {
-              src: 'https://dummyimage.com/96x96',
+              src: AudioSession.getPicture(meta),
               sizes: '96x96',
               type: 'image/png',
             },
             {
-              src: 'https://dummyimage.com/128x128',
+              src: AudioSession.getPicture(meta),
               sizes: '128x128',
               type: 'image/png',
             },
             {
-              src: 'https://dummyimage.com/192x192',
+              src: AudioSession.getPicture(meta),
               sizes: '192x192',
               type: 'image/png',
             },
             {
-              src: 'https://dummyimage.com/256x256',
+              src: AudioSession.getPicture(meta),
               sizes: '256x256',
               type: 'image/png',
             },
             {
-              src: 'https://dummyimage.com/384x384',
+              src: AudioSession.getPicture(meta),
               sizes: '384x384',
               type: 'image/png',
             },
             {
-              src: 'https://dummyimage.com/512x512',
+              src: AudioSession.getPicture(meta),
               sizes: '512x512',
               type: 'image/png',
             },
@@ -93,4 +93,22 @@ export default class AudioSession {
         },
       });
     });
+
+  static getPicture = (meta: any) => {
+    const { picture: { data = undefined, format = undefined } = {} } =
+      meta.tags ?? {};
+
+    if (data && format) {
+      let TYPED_ARRAY: any = new Uint8Array(data);
+      const STRING_CHAR = TYPED_ARRAY.reduce((data: any, byte: any) => {
+        return data + String.fromCharCode(byte);
+      }, '');
+      let base64String = btoa(STRING_CHAR);
+      let imgurl = `data:${format};base64,${base64String}`;
+
+      return imgurl;
+    }
+
+    return 'https://dummyimage.com/512x512';
+  };
 }
