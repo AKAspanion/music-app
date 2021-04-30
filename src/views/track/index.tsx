@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { FaPlay, FaPause } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 import { BsFillSkipBackwardFill, BsFillSkipForwardFill } from 'react-icons/bs';
-import { RiShuffleFill, RiRepeat2Fill } from 'react-icons/ri';
-// RiRepeatOneFill
+import { RiShuffleFill, RiRepeat2Fill, RiRepeatOneFill } from 'react-icons/ri';
 
 import AudioSession from '../../services/audio-session';
 import { Button, Slider } from '../../components';
+import { SET_REPEAT } from '../../redux';
 import { songTitle } from '../../utils';
 import './styles.css';
 
@@ -19,6 +19,7 @@ type TrackProps = {
   onPlay?: Function;
   onPause?: Function;
   onChange?: Function;
+  onShuffle?: Function;
   visualizer?: React.ReactNode;
 };
 
@@ -31,9 +32,12 @@ const Track = ({
   onPlay,
   onPause,
   onChange,
+  onShuffle,
   visualizer,
 }: TrackProps) => {
   const [meta, setMeta] = useState<any>(null);
+
+  const dispatch = useDispatch();
 
   const settings = useSelector((state: any) => state.settings);
 
@@ -43,6 +47,15 @@ const Track = ({
 
   const title = tags.title ?? songTitle(song);
   const artist = tags.artist ?? 'Unknown Artist';
+  const picture = AudioSession.getPicture(meta);
+
+  const handleRepeat = () => {
+    if (settings.repeat === 'all') {
+      dispatch(SET_REPEAT('one'));
+    } else {
+      dispatch(SET_REPEAT('all'));
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -51,8 +64,6 @@ const Track = ({
       setMeta(meta);
     })();
   }, [song]);
-
-  const picture = AudioSession.getPicture(meta);
 
   return (
     <div className="track">
@@ -72,7 +83,10 @@ const Track = ({
           <p>{artist}</p>
         </div>
         <div className="track__controls">
-          <div className="track__controls__btn">
+          <div
+            className="track__controls__btn"
+            onClick={() => onShuffle && onShuffle()}
+          >
             <RiShuffleFill size={24} color={color} />
           </div>
           <div
@@ -98,8 +112,12 @@ const Track = ({
           >
             <BsFillSkipForwardFill size={28} color={color} />
           </div>
-          <div className="track__controls__btn">
-            <RiRepeat2Fill size={24} color={color} />
+          <div className="track__controls__btn" onClick={() => handleRepeat()}>
+            {settings.repeat === 'one' ? (
+              <RiRepeatOneFill size={24} color={color} />
+            ) : (
+              <RiRepeat2Fill size={24} color={color} />
+            )}
           </div>
         </div>
       </div>

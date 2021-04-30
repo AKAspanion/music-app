@@ -7,4 +7,5 @@ export const T_RESUME_SONG = 'RESUME_SONG';
 
 export const T_SET_GRID = 'SET_GRID';
 export const T_SET_THEME = 'SET_THEME';
+export const T_SET_REPEAT = 'SET_REPEAT';
 export const T_SET_VISUALIZER = 'SET_VISUALIZER';

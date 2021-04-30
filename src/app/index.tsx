@@ -77,8 +77,8 @@ function App() {
         await htmlAudio.play();
 
         AudioSession.addNewSong(songs[index], {
-          next: () => nextSong(),
-          prev: () => prevSong(),
+          next: () => nextSong(true),
+          prev: () => prevSong(true),
           play: () => resumeSong(),
           pause: () => pauseSong(),
           stop: () => pauseSong(),
@@ -94,17 +94,39 @@ function App() {
     htmlAudio.src = '';
   };
 
-  const nextSong = () => {
+  const shuffleSong = () => {
     if (isSongsThere()) {
-      dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+      dispatch(PLAY_SONG(Math.floor(Math.random() * songs.length)));
     }
   };
 
-  const prevSong = () => {
+  const nextSong = (override: boolean = false) => {
     if (isSongsThere()) {
-      const prevIndex = playState.index - 1;
-      const index = prevIndex < 0 ? songs.length - 1 : prevIndex;
-      dispatch(PLAY_SONG(index));
+      pauseSong();
+
+      setTimeout(() => {
+        if (settings.repeat === 'one' && !override) {
+          resumeSong();
+        } else {
+          dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+        }
+      });
+    }
+  };
+
+  const prevSong = (override: boolean = false) => {
+    if (isSongsThere()) {
+      pauseSong();
+
+      setTimeout(() => {
+        if (settings.repeat === 'one' && !override) {
+          resumeSong();
+        } else {
+          const prevIndex = playState.index - 1;
+          const index = prevIndex < 0 ? songs.length - 1 : prevIndex;
+          dispatch(PLAY_SONG(index));
+        }
+      });
     }
   };
 
@@ -252,10 +274,11 @@ function App() {
           <Track
             range={range}
             playing={playState.playing}
-            onNext={() => nextSong()}
-            onPrev={() => prevSong()}
+            onNext={() => nextSong(true)}
+            onPrev={() => prevSong(true)}
             onPlay={() => resumeSong()}
             onPause={() => pauseSong()}
+            onShuffle={() => shuffleSong()}
             song={songs[playState.index]}
             onChange={(v: number) => timeDrag(v)}
             visualizer={visualize(true)}

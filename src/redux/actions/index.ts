@@ -6,6 +6,7 @@ import {
   T_REMOVE_SONGS,
   T_SET_GRID,
   T_SET_THEME,
+  T_SET_REPEAT,
   T_SET_VISUALIZER,
 } from '../types';
 
@@ -44,5 +45,10 @@ export const SET_VISUALIZER = (value: boolean) => ({
 
 export const SET_THEME = (value: boolean) => ({
   type: T_SET_THEME,
+  value,
+});
+
+export const SET_REPEAT = (value: string) => ({
+  type: T_SET_REPEAT,
   value,
 });
