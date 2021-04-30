@@ -6,29 +6,31 @@ import { RiShuffleFill, RiRepeat2Fill } from 'react-icons/ri';
 // RiRepeatOneFill
 
 import AudioSession from '../../services/audio-session';
-import { Button } from '../../components';
+import { Button, Slider } from '../../components';
 import { songTitle } from '../../utils';
 import './styles.css';
 
 type TrackProps = {
   song?: any;
+  range?: any;
   playing?: boolean;
   onNext?: Function;
   onPrev?: Function;
   onPlay?: Function;
   onPause?: Function;
-  slider?: React.ReactNode;
+  onChange?: Function;
   visualizer?: React.ReactNode;
 };
 
 const Track = ({
   song,
+  range,
   playing,
   onNext,
   onPrev,
   onPlay,
   onPause,
-  slider,
+  onChange,
   visualizer,
 }: TrackProps) => {
   const [meta, setMeta] = useState<any>(null);
@@ -50,9 +52,20 @@ const Track = ({
     })();
   }, [song]);
 
+  const picture = AudioSession.getPicture(meta);
+
   return (
     <div className="track">
-      {slider}
+      <Slider
+        value={range}
+        onTouch={() => onPause && onPause()}
+        onTouchEnd={() => onPlay && onPlay()}
+        onChange={(v: number) => onChange && onChange(v)}
+      >
+        <div className="track__slider__img">
+          <img alt={title} src={picture} />
+        </div>
+      </Slider>
       <div className="track__content">
         <div className="track__details">
           <h1>{title}</h1>

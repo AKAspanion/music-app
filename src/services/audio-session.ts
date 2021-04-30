@@ -95,20 +95,22 @@ export default class AudioSession {
     });
 
   static getPicture = (meta: any) => {
-    const { picture: { data = undefined, format = undefined } = {} } =
-      meta.tags ?? {};
+    if (meta !== null) {
+      const { picture: { data = undefined, format = undefined } = {} } =
+        meta.tags ?? {};
 
-    if (data && format) {
-      let TYPED_ARRAY: any = new Uint8Array(data);
-      const STRING_CHAR = TYPED_ARRAY.reduce((data: any, byte: any) => {
-        return data + String.fromCharCode(byte);
-      }, '');
-      let base64String = btoa(STRING_CHAR);
-      let imgurl = `data:${format};base64,${base64String}`;
+      if (data && format) {
+        let TYPED_ARRAY: any = new Uint8Array(data);
+        const STRING_CHAR = TYPED_ARRAY.reduce((data: any, byte: any) => {
+          return data + String.fromCharCode(byte);
+        }, '');
+        let base64String = btoa(STRING_CHAR);
+        let imgurl = `data:${format};base64,${base64String}`;
 
-      return imgurl;
+        return imgurl;
+      }
     }
 
-    return 'https://dummyimage.com/512x512';
+    return 'https://github.com/AKAspanion/music-app/blob/master/public/logo192.png?raw=true';
   };
 }

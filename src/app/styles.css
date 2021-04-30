@@ -30,16 +30,6 @@
   background: transparent;
 }
 
-.app__slider__img {
-  width: 85%;
-  height: 85%;
-  display: flex;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-color-accent);
-}
-
 @media (min-width: 700px) {
   .app__wrapper {
     background-color: var(--bg-color-secondary);

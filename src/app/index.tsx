@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BsMusicNoteBeamed } from 'react-icons/bs';
 import { FaChevronLeft } from 'react-icons/fa';
 
-import { Header, Empty, Slider, Visualizer } from '../components';
+import { Header, Empty, Visualizer } from '../components';
 import { useResize } from '../hooks';
 
 import {
@@ -251,26 +250,14 @@ function App() {
           />
         ) : (
           <Track
+            range={range}
             playing={playState.playing}
             onNext={() => nextSong()}
             onPrev={() => prevSong()}
             onPlay={() => resumeSong()}
             onPause={() => pauseSong()}
             song={songs[playState.index]}
-            slider={
-              <Slider
-                value={range}
-                onTouch={() => pauseSong()}
-                onTouchEnd={() => resumeSong()}
-                onChange={(v: number) => timeDrag(v)}
-              >
-                <div className="app__slider__img">
-                  <div style={{ transform: 'translateX(-6px)' }}>
-                    <BsMusicNoteBeamed size={108} />
-                  </div>
-                </div>
-              </Slider>
-            }
+            onChange={(v: number) => timeDrag(v)}
             visualizer={visualize(true)}
           />
         )}

@@ -4,12 +4,13 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .track__content {
   z-index: 50;
   width: 100%;
+  padding-bottom: calc(var(--padding) * 1.5);
 }
 
 .track__controls {
@@ -40,4 +41,19 @@
   letter-spacing: 2px;
   width: min(420px, 100%);
   text-overflow: ellipsis;
+}
+
+.track__slider__img {
+  width: 85%;
+  height: 85%;
+  display: flex;
+  overflow: hidden;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-color-accent);
+}
+
+.track__slider__img > img {
+  width: 100%;
 }
