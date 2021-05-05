@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaChevronLeft } from 'react-icons/fa';
 
-import { Header, Empty, Visualizer } from '../components';
+import { Header, Empty } from '../components';
 import { useResize } from '../hooks';
 
 import {
@@ -11,6 +11,7 @@ import {
   PAUSE_SONG,
   RESUME_SONG,
   DELETE_SONG,
+  SET_VIEW,
 } from '../redux';
 
 import AudioSession from '../services/audio-session';
@@ -27,12 +28,12 @@ function App() {
   const audio = useRef(null);
   const dispatch = useDispatch();
 
+  const { view } = useSelector((state: any) => state.app);
   const songs = useSelector((state: any) => state.songs);
   const settings = useSelector((state: any) => state.settings);
   const playState = useSelector((state: any) => state.playState);
 
   const [range, setRange] = useState(0);
-  const [view, setView] = useState('home');
   const [showMenu, setShowMenu] = useState(false);
   const [searchText, setSearchText] = useState('');
 
@@ -57,7 +58,7 @@ function App() {
       try {
         await audioPlayer().play();
       } catch (error) {
-        console.log(error);
+        console.trace(error);
       }
     }
   };
@@ -110,7 +111,7 @@ function App() {
         } else {
           dispatch(PLAY_SONG((playState.index + 1) % songs.length));
         }
-      });
+      }, 100);
     }
   };
 
@@ -126,7 +127,7 @@ function App() {
           const index = prevIndex < 0 ? songs.length - 1 : prevIndex;
           dispatch(PLAY_SONG(index));
         }
-      });
+      }, 100);
     }
   };
 
@@ -202,20 +203,6 @@ function App() {
     }
   };
 
-  const visualize = (app: boolean) => {
-    return (
-      <Visualizer
-        app={app}
-        width={size.width}
-        audio={audioPlayer()}
-        onError={() => nextSong()}
-        playing={playState.playing}
-        short={app ? undefined : 10}
-        className={app ? 'app__visualizer' : ''}
-      />
-    );
-  };
-
   return (
     <div ref={ref} className="app__wrapper">
       <div className="app__container">
@@ -234,7 +221,7 @@ function App() {
                 <FaChevronLeft size={24} />
               </div>
             }
-            onLeftIconClick={() => setView('home')}
+            onLeftIconClick={() => dispatch(SET_VIEW('home'))}
           />
         )}
         <Menu show={showMenu} onClose={() => setShowMenu(false)} />
@@ -272,16 +259,17 @@ function App() {
           />
         ) : (
           <Track
+            size={size}
             range={range}
+            audio={audioPlayer()}
             playing={playState.playing}
-            onNext={() => nextSong(true)}
-            onPrev={() => prevSong(true)}
             onPlay={() => resumeSong()}
             onPause={() => pauseSong()}
+            onNext={() => nextSong(true)}
+            onPrev={() => prevSong(true)}
             onShuffle={() => shuffleSong()}
             song={songs[playState.index]}
             onChange={(v: number) => timeDrag(v)}
-            visualizer={visualize(true)}
           />
         )}
 
@@ -303,15 +291,16 @@ function App() {
           ></audio>
         </div>
         <NowPlaying
+          size={size}
           percent={range}
           width={size.width}
+          audio={audioPlayer()}
           playing={playState.playing}
           song={songs[playState.index]}
           onPlay={() => resumeSong()}
           onPause={() => pauseSong()}
-          onClick={() => setView('track')}
+          onClick={() => dispatch(SET_VIEW('track'))}
           open={view === 'home' && playState.index > -1}
-          visualizer={visualize(false)}
         />
       </div>
     </div>

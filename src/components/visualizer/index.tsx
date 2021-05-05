@@ -19,10 +19,11 @@ const Visualizer = ({
   playing,
   onError,
   short = 2,
-  app = true,
   width = 400,
+  app = false,
   className = '',
 }: VisualizerProps) => {
+  const { view } = useSelector((state: any) => state.app);
   const settings = useSelector((state: any) => state.settings);
 
   const canvasRef = useRef(null);
@@ -66,9 +67,20 @@ const Visualizer = ({
         return `rgb(${c()},${c()},${c()})`;
       };
 
-      const draw = () => {
-        animationFrameRequestId = requestAnimationFrame(draw);
+      const loop = () => {
+        animationFrameRequestId = undefined;
 
+        start();
+        draw();
+      };
+
+      const start = () => {
+        if (!animationFrameRequestId) {
+          animationFrameRequestId = requestAnimationFrame(loop);
+        }
+      };
+
+      const draw = () => {
         analyser.getByteTimeDomainData(dataArray); // get waveform data and put it into the array created above
 
         ctx.fillStyle = fillValue ?? '#36395E'; // draw wave with canvas
@@ -100,33 +112,35 @@ const Visualizer = ({
         ctx.stroke();
       };
 
-      draw();
+      start();
     } catch (error) {
       onError && onError(error);
     }
   };
 
   useLayoutEffect(() => {
-    const clearFrames = () => {
+    const stop = () => {
       if (animationFrameRequestId) {
-        let id = animationFrameRequestId;
-        while (id--) {
-          cancelAnimationFrame(id);
-        }
+        cancelAnimationFrame(animationFrameRequestId);
+        animationFrameRequestId = undefined;
       }
     };
 
-    if (audio && playing) {
+    if (audio) {
       const appColor = settings.light ? '#EDEEF4' : '#191C2D';
       const normalColor = settings.light ? '#BBBED9' : '#36395E';
 
-      visualize(app ? appColor : normalColor);
-    } else {
-      clearFrames();
+      if (playing) {
+        visualize(app ? appColor : normalColor);
+      } else {
+        stop();
+      }
     }
 
+    return () => stop();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [audio, playing, settings.light]);
+  }, [audio, playing, settings.light, app, view]);
 
   return (
     <canvas

@@ -5,19 +5,22 @@ import { BsFillSkipBackwardFill, BsFillSkipForwardFill } from 'react-icons/bs';
 import { RiShuffleFill, RiRepeat2Fill, RiRepeatOneFill } from 'react-icons/ri';
 
 import AudioSession from '../../services/audio-session';
-import { Button, Slider } from '../../components';
+import { Button, Slider, Visualizer } from '../../components';
 import { SET_REPEAT } from '../../redux';
 import { songTitle } from '../../utils';
 import './styles.css';
 
 type TrackProps = {
   song?: any;
+  size?: any;
   range?: any;
-  playing?: boolean;
+  audio?: any;
+  playing: boolean;
   onNext?: Function;
   onPrev?: Function;
   onPlay?: Function;
   onPause?: Function;
+  onError?: Function;
   onChange?: Function;
   onShuffle?: Function;
   visualizer?: React.ReactNode;
@@ -25,15 +28,17 @@ type TrackProps = {
 
 const Track = ({
   song,
+  size,
   range,
+  audio,
   playing,
   onNext,
   onPrev,
   onPlay,
+  onError,
   onPause,
   onChange,
   onShuffle,
-  visualizer,
 }: TrackProps) => {
   const [meta, setMeta] = useState<any>(null);
 
@@ -121,7 +126,16 @@ const Track = ({
           </div>
         </div>
       </div>
-      {settings.visualizer && visualizer}
+      {settings.visualizer && (
+        <Visualizer
+          app
+          audio={audio}
+          playing={playing}
+          width={size.width}
+          className={'track__visualizer'}
+          onError={() => onError && onError()}
+        />
+      )}
     </div>
   );
 };

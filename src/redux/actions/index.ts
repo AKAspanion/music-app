@@ -8,6 +8,7 @@ import {
   T_SET_THEME,
   T_SET_REPEAT,
   T_SET_VISUALIZER,
+  T_SET_VIEW,
 } from '../types';
 
 export const ADD_SONGS = (songs: any) => ({
@@ -50,5 +51,10 @@ export const SET_THEME = (value: boolean) => ({
 
 export const SET_REPEAT = (value: string) => ({
   type: T_SET_REPEAT,
+  value,
+});
+
+export const SET_VIEW = (value: string) => ({
+  type: T_SET_VIEW,
   value,
 });

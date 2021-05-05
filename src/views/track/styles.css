@@ -57,3 +57,8 @@
 .track__slider__img > img {
   width: 100%;
 }
+
+.track__visualizer {
+  top: 40%;
+  position: absolute;
+}

@@ -2,31 +2,35 @@ import { useSelector } from 'react-redux';
 import { BsMusicNote } from 'react-icons/bs';
 import { FaPause, FaPlay } from 'react-icons/fa';
 
-import { Button } from '../../components';
+import { Button, Visualizer } from '../../components';
 import './styles.css';
 
 type NowPlayingProps = {
   song?: any;
+  size?: any;
+  audio?: any;
   open?: boolean;
   width?: number;
   playing: boolean;
   onPlay?: Function;
   onPause?: Function;
   onClick?: Function;
+  onError?: Function;
   percent?: number;
-  visualizer?: React.ReactNode;
 };
 
 const NowPlaying = ({
   song,
+  size,
+  audio,
   onPlay,
   onPause,
   onClick,
+  onError,
   percent,
   playing,
   open = true,
   width = 300,
-  visualizer,
 }: NowPlayingProps) => {
   const settings = useSelector((state: any) => state.settings);
 
@@ -69,7 +73,15 @@ const NowPlaying = ({
         ></div>
         <div className="nowplaying__progress__placeholder"></div>
         <div className="nowplaying__visualizer">
-          {settings.visualizer && visualizer}
+          {settings.visualizer && (
+            <Visualizer
+              short={10}
+              audio={audio}
+              playing={playing}
+              width={size.width}
+              onError={() => onError && onError()}
+            />
+          )}
         </div>
       </div>
     </div>

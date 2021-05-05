@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
 
-import { songReducer, settingsReducer, playStateReducer } from './reducers';
+import {
+  appReducer,
+  songReducer,
+  settingsReducer,
+  playStateReducer,
+} from './reducers';
 
 export const reducers = combineReducers({
+  app: appReducer,
   songs: songReducer,
   settings: settingsReducer,
   playState: playStateReducer,

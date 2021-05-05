@@ -19,11 +19,6 @@
   justify-content: flex-start;
 }
 
-.app__visualizer {
-  top: 40%;
-  position: absolute;
-}
-
 .app__content {
   z-index: 2;
   width: 100%;
