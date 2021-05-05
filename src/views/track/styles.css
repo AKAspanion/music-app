@@ -22,7 +22,18 @@
 
 .track__controls__btn {
   cursor: pointer;
+  position: relative;
   padding: 0 calc(var(--padding) / 1.5);
+}
+
+.track__controls__cross {
+  position: absolute;
+  width: 3px;
+  height: 30px;
+  border-radius: 3px;
+  transform-origin: top right;
+  background: var(--color-primary);
+  transform: rotate(-45deg) translate(-0.5px, -0.5px);
 }
 
 .track__details {

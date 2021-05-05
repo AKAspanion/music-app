@@ -1,7 +1,9 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import { getTime } from '../../utils';
 import './styles.css';
 
 type SliderProps = {
+  audio?: any;
   size?: number;
   value?: number;
   onChange?: Function;
@@ -16,6 +18,7 @@ const Slider = ({
   value = 0,
   size = 240,
   children,
+  audio,
   onChange,
   onTouch,
   onTouchEnd,
@@ -153,6 +156,12 @@ const Slider = ({
       <div className="slider__dial" tabIndex={0} ref={dialRef}></div>
       <div className="slider__start"></div>
       <div className="slider__end"></div>
+      <div className="slider__currtime">
+        {audio && audio.currentTime ? getTime(audio.currentTime) : ''}
+      </div>
+      <div className="slider__totaltime">
+        {audio && audio.duration ? getTime(audio.duration) : ''}
+      </div>
     </div>
   );
 };

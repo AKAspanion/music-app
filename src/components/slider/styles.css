@@ -102,3 +102,19 @@
   background-color: var(--bg-color-secondary);
   right: 0;
 }
+
+.slider__currtime,
+.slider__totaltime {
+  font-size: 12px;
+  z-index: 50;
+  left: -12px;
+  font-weight: bold;
+  position: absolute;
+  color: var(--color-secondary);
+  top: calc(40% - var(--dial-size) / 4.1);
+}
+
+.slider__totaltime {
+  right: -12px;
+  left: unset;
+}

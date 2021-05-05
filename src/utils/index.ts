@@ -47,3 +47,7 @@ export const songTitle = (song: any) => {
 
   return title.split('.')[0];
 };
+
+export const getTime = (time: number) => {
+  return time ? new Date(time * 1000).toISOString().substr(14, 5) : '';
+};

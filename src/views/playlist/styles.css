@@ -14,20 +14,34 @@
 
 .playlist--grid .playlist__item {
   flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: space-between;
   width: calc(50% - var(--padding) * 1.8);
 }
 
 .playlist--grid .playlist__item .playlist__name {
-  width: 100%;
   min-height: 40px;
   white-space: normal;
   text-overflow: unset;
   word-wrap: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  width: calc(100% - 56px);
   -webkit-box-orient: vertical;
   margin-bottom: var(--padding);
+}
+
+.playlist__duration {
+  width: 40px;
+  height: 100%;
+  font-size: 13px;
+  font-weight: 300;
+  overflow: hidden;
+  padding-left: 16px;
+}
+
+.playlist--grid .playlist__item .playlist__duration {
+  padding-top: 2px;
 }
 
 .playlist--grid .playlist__item .playlist__icon--right {
@@ -113,7 +127,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  width: calc(100% - 56px - 56px);
+  width: calc(100% - 172px);
 }
 
 .playlist__icon--right {

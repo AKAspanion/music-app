@@ -108,8 +108,12 @@ function App() {
       setTimeout(() => {
         if (settings.repeat === 'one' && !override) {
           resumeSong();
-        } else {
+        } else if (settings.repeat === 'all') {
           dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+        } else {
+          if (playState.index + 1 !== songs.length) {
+            dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+          }
         }
       }, 100);
     }

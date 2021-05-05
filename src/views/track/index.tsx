@@ -55,11 +55,8 @@ const Track = ({
   const picture = AudioSession.getPicture(meta);
 
   const handleRepeat = () => {
-    if (settings.repeat === 'all') {
-      dispatch(SET_REPEAT('one'));
-    } else {
-      dispatch(SET_REPEAT('all'));
-    }
+    const data: any = { all: 'one', one: 'none', none: 'all' };
+    dispatch(SET_REPEAT(data[settings.repeat]));
   };
 
   useEffect(() => {
@@ -74,6 +71,7 @@ const Track = ({
     <div className="track">
       <Slider
         value={range}
+        audio={audio}
         onTouch={() => onPause && onPause()}
         onTouchEnd={() => onPlay && onPlay()}
         onChange={(v: number) => onChange && onChange(v)}
@@ -121,7 +119,12 @@ const Track = ({
             {settings.repeat === 'one' ? (
               <RiRepeatOneFill size={24} color={color} />
             ) : (
-              <RiRepeat2Fill size={24} color={color} />
+              <>
+                {settings.repeat === 'none' && (
+                  <div className="track__controls__cross"></div>
+                )}
+                <RiRepeat2Fill size={24} color={color} />
+              </>
             )}
           </div>
         </div>
