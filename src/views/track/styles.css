@@ -5,6 +5,7 @@
   align-items: center;
   flex-direction: column;
   justify-content: space-between;
+  animation: track 0.5s var(--transition) 1;
 }
 
 .track__content {
@@ -84,6 +85,15 @@
   }
   90% {
     transform: translateX(0);
+  }
+}
+
+@keyframes track {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
   }
 }
 

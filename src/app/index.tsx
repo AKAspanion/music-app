@@ -237,53 +237,52 @@ function App() {
           />
         )}
         <Menu show={showMenu} onClose={() => setShowMenu(false)} />
-        {view === 'home' ? (
-          <Home
-            showSearch={true}
-            onSearch={(e: string) => setSearchText(e)}
-            playlist={
-              filteredSongs().length === 0 ? (
-                <Empty
-                  message="No songs found"
-                  description={
-                    searchText && songs.length > 0
-                      ? 'To widen your search, change or remove keyword'
-                      : 'When you are ready, go ahead and add few songs'
-                  }
-                />
-              ) : (
-                <Playlist
-                  songs={songs}
-                  grid={settings.grid}
-                  playState={playState}
-                  filteredSongs={filteredSongs()}
-                  onDelete={(index: number) => deleteSong(index)}
-                  onClick={(index: number) =>
-                    index === playState.index
-                      ? playState.playing
-                        ? pauseSong()
-                        : resumeSong()
-                      : dispatch(PLAY_SONG(index))
-                  }
-                />
-              )
-            }
-          />
-        ) : (
-          <Track
-            size={size}
-            range={range}
-            audio={audioPlayer()}
-            playing={playState.playing}
-            onPlay={() => resumeSong()}
-            onPause={() => pauseSong()}
-            onNext={() => nextSong(true)}
-            onPrev={() => prevSong(true)}
-            onShuffle={() => shuffleSong()}
-            song={songs[playState.index]}
-            onChange={(v: number) => timeDrag(v)}
-          />
-        )}
+        <Home
+          showSearch={true}
+          open={view === 'home'}
+          onSearch={(e: string) => setSearchText(e)}
+          playlist={
+            filteredSongs().length === 0 ? (
+              <Empty
+                message="No songs found"
+                description={
+                  searchText && songs.length > 0
+                    ? 'To widen your search, change or remove keyword'
+                    : 'When you are ready, go ahead and add few songs'
+                }
+              />
+            ) : (
+              <Playlist
+                songs={songs}
+                grid={settings.grid}
+                playState={playState}
+                filteredSongs={filteredSongs()}
+                onDelete={(index: number) => deleteSong(index)}
+                onClick={(index: number) =>
+                  index === playState.index
+                    ? playState.playing
+                      ? pauseSong()
+                      : resumeSong()
+                    : dispatch(PLAY_SONG(index))
+                }
+              />
+            )
+          }
+        />
+        <Track
+          size={size}
+          range={range}
+          audio={audioPlayer()}
+          open={view === 'track'}
+          playing={playState.playing}
+          onPlay={() => resumeSong()}
+          onPause={() => pauseSong()}
+          onNext={() => nextSong(true)}
+          onPrev={() => prevSong(true)}
+          onShuffle={() => shuffleSong()}
+          song={songs[playState.index]}
+          onChange={(v: number) => timeDrag(v)}
+        />
 
         <div className="app__content">
           <input
