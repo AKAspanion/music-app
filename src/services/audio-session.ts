@@ -1,3 +1,5 @@
+import img from '../assets/logo512.png';
+
 declare global {
   interface Window {
     MediaMetadata: any;
@@ -113,6 +115,6 @@ export default class AudioSession {
       }
     }
 
-    return 'https://github.com/AKAspanion/music-app/blob/master/public/logo192.png?raw=true';
+    return img;
   };
 }

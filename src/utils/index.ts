@@ -10,6 +10,7 @@ export const setTheme = (light: boolean = false) => {
     '--color-primary': 'rgba(255, 255, 255, 1)',
     '--color-secondary': 'rgba(255, 255, 255, 0.78)',
     '--color-disabled': 'rgba(255, 255, 255, 0.46)',
+    '--color-dim': 'rgba(255, 255, 255, 0.06)',
   };
   const lightTheme: any = {
     '--padding': '24px',
@@ -22,6 +23,7 @@ export const setTheme = (light: boolean = false) => {
     '--color-primary': 'rgba(0, 0, 0, 1)',
     '--color-secondary': 'rgba(0, 0, 0, 0.86)',
     '--color-disabled': 'rgba(0, 0, 0, 0.56)',
+    '--color-dim': 'rgba(0, 0, 0, 0.06)',
   };
 
   const themeObject = light ? lightTheme : darkTheme;
