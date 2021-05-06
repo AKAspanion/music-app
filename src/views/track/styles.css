@@ -50,8 +50,41 @@
   overflow: hidden;
   white-space: nowrap;
   letter-spacing: 2px;
-  width: min(420px, 100%);
   text-overflow: ellipsis;
+}
+
+.track__details h1.overflowed {
+  width: var(--scroll-width);
+  overflow: unset;
+  text-overflow: unset;
+  display: inline-block;
+  animation-delay: 600ms;
+  animation: floatText 20s infinite linear;
+}
+.track__details h1:hover {
+  animation-play-state: paused;
+}
+
+@keyframes floatText {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    visibility: hidden;
+    transform: translateX(calc(var(--scroll-width) * -1.1));
+  }
+  50.1% {
+    transform: translateX(calc(var(--client-width) * 1.1));
+  }
+  50.2% {
+    visibility: hidden;
+  }
+  50.3% {
+    visibility: visible;
+  }
+  90% {
+    transform: translateX(0);
+  }
 }
 
 .track__slider__img {

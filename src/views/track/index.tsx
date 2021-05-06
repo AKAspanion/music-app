@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
 import { FaPlay, FaPause } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { BsFillSkipBackwardFill, BsFillSkipForwardFill } from 'react-icons/bs';
 import { RiShuffleFill, RiRepeat2Fill, RiRepeatOneFill } from 'react-icons/ri';
 
@@ -40,11 +40,17 @@ const Track = ({
   onChange,
   onShuffle,
 }: TrackProps) => {
+  const settings = useSelector((state: any) => state.settings);
+
   const [meta, setMeta] = useState<any>(null);
+  const [width, setWidth] = useState<any>({
+    scroll: '100%',
+    client: '100%',
+  });
+
+  const titleRef = useRef<any>(null);
 
   const dispatch = useDispatch();
-
-  const settings = useSelector((state: any) => state.settings);
 
   const color = settings.light ? 'black' : 'white';
 
@@ -56,16 +62,25 @@ const Track = ({
 
   const handleRepeat = () => {
     const data: any = { all: 'one', one: 'none', none: 'all' };
-    dispatch(SET_REPEAT(data[settings.repeat]));
+    dispatch(SET_REPEAT(data[settings.repeat] ?? 'all'));
   };
 
-  useEffect(() => {
-    (async () => {
-      const meta = await AudioSession.getMetadata(song);
+  useLayoutEffect(() => {
+    if (titleRef.current !== null) {
+      setWidth({
+        scroll: titleRef.current!.scrollWidth,
+        client: titleRef.current!.clientWidth,
+      });
+    }
 
-      setMeta(meta);
+    (async () => {
+      if (song) {
+        const meta = await AudioSession.getMetadata(song);
+
+        setMeta(meta);
+      }
     })();
-  }, [song]);
+  }, [song, title]);
 
   return (
     <div className="track">
@@ -82,7 +97,18 @@ const Track = ({
       </Slider>
       <div className="track__content">
         <div className="track__details">
-          <h1>{title}</h1>
+          <h1
+            ref={titleRef}
+            style={
+              {
+                '--scroll-width': `${width.scroll}px`,
+                '--client-width': `${width.client}px`,
+              } as React.CSSProperties
+            }
+            className={width.scroll > width.client ? 'overflowed' : ''}
+          >
+            {title}
+          </h1>
           <p>{artist}</p>
         </div>
         <div className="track__controls">
