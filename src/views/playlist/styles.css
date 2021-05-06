@@ -112,7 +112,7 @@
 }
 
 .playlist__icon:hover,
-.playlist--grid .playlist__item .playlist__icon:hover:before {
+.playlist__item .playlist__icon:hover:before {
   opacity: 1;
   transition: 0.3s;
   transition: all 0.3s ease;

@@ -9,6 +9,7 @@ import { Button, Slider, Visualizer } from '../../components';
 import { SET_REPEAT } from '../../redux';
 import { songTitle } from '../../utils';
 import './styles.css';
+import Vibrate from '../../services/vibrate';
 
 type TrackProps = {
   song?: any;
@@ -65,6 +66,12 @@ const Track = ({
     dispatch(SET_REPEAT(data[settings.repeat] ?? 'all'));
   };
 
+  const handleClick = (callback: Function) => {
+    Vibrate.do();
+
+    callback();
+  };
+
   useLayoutEffect(() => {
     if (titleRef.current !== null) {
       setWidth({
@@ -114,13 +121,13 @@ const Track = ({
         <div className="track__controls">
           <div
             className="track__controls__btn"
-            onClick={() => onShuffle && onShuffle()}
+            onClick={() => handleClick(() => onShuffle && onShuffle())}
           >
             <RiShuffleFill size={24} color={color} />
           </div>
           <div
             className="track__controls__btn"
-            onClick={() => onPrev && onPrev()}
+            onClick={() => handleClick(() => onPrev && onPrev())}
           >
             <BsFillSkipBackwardFill size={28} color={color} />
           </div>
@@ -129,7 +136,9 @@ const Track = ({
               size={64}
               active={playing}
               onClick={() =>
-                playing ? onPause && onPause() : onPlay && onPlay()
+                handleClick(() =>
+                  playing ? onPause && onPause() : onPlay && onPlay(),
+                )
               }
             >
               {playing ? <FaPause size={22} /> : <FaPlay size={22} />}
@@ -137,11 +146,14 @@ const Track = ({
           </div>
           <div
             className="track__controls__btn"
-            onClick={() => onNext && onNext()}
+            onClick={() => handleClick(() => onNext && onNext())}
           >
             <BsFillSkipForwardFill size={28} color={color} />
           </div>
-          <div className="track__controls__btn" onClick={() => handleRepeat()}>
+          <div
+            className="track__controls__btn"
+            onClick={() => handleClick(() => handleRepeat())}
+          >
             {settings.repeat === 'one' ? (
               <RiRepeatOneFill size={24} color={color} />
             ) : (

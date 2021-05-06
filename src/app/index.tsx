@@ -105,14 +105,22 @@ function App() {
     if (isSongsThere()) {
       pauseSong();
 
+      const goNext = () =>
+        dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+
       setTimeout(() => {
-        if (settings.repeat === 'one' && !override) {
+        if (override) {
+          goNext();
+          return;
+        }
+
+        if (settings.repeat === 'one') {
           resumeSong();
         } else if (settings.repeat === 'all') {
-          dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+          goNext();
         } else {
           if (playState.index + 1 !== songs.length) {
-            dispatch(PLAY_SONG((playState.index + 1) % songs.length));
+            goNext();
           }
         }
       }, 100);
