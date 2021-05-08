@@ -26,18 +26,18 @@
   word-wrap: break-word;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  width: calc(100% - 56px);
+  width: calc(100% - 52px);
   -webkit-box-orient: vertical;
   margin-bottom: var(--padding);
 }
 
 .playlist__duration {
-  width: 40px;
+  width: 36px;
   height: 100%;
   font-size: 13px;
   font-weight: 300;
   overflow: hidden;
-  padding-left: 16px;
+  padding-left: 12px;
 }
 
 .playlist--grid .playlist__item .playlist__duration {

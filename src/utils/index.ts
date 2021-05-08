@@ -23,7 +23,7 @@ export const setTheme = (light: boolean = false) => {
     '--color-primary': 'rgba(0, 0, 0, 1)',
     '--color-secondary': 'rgba(0, 0, 0, 0.86)',
     '--color-disabled': 'rgba(0, 0, 0, 0.56)',
-    '--color-dim': 'rgba(0, 0, 0, 0.06)',
+    '--color-dim': 'rgba(53, 57, 95, 0.06)',
   };
 
   const themeObject = light ? lightTheme : darkTheme;
