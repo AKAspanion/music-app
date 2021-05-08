@@ -16,7 +16,6 @@ type TrackProps = {
   size?: any;
   range?: any;
   audio?: any;
-  open: boolean;
   playing: boolean;
   onNext?: Function;
   onPrev?: Function;
@@ -31,7 +30,6 @@ type TrackProps = {
 const Track = ({
   song,
   size,
-  open,
   range,
   audio,
   playing,
@@ -91,7 +89,7 @@ const Track = ({
     })();
   }, [song, title]);
 
-  return open ? (
+  return (
     <div className="track">
       <Slider
         value={range}
@@ -180,7 +178,7 @@ const Track = ({
         />
       )}
     </div>
-  ) : null;
+  );
 };
 
 export default Track;

@@ -36,6 +36,7 @@
 .nowplaying__title__wrapper {
   z-index: 1;
   display: flex;
+  cursor: pointer;
   font-weight: 500;
   align-items: center;
   width: calc(100% - 106px);
@@ -43,7 +44,6 @@
 }
 
 .nowplaying__title {
-  cursor: pointer;
   overflow: hidden;
   font-size: 20px;
   white-space: nowrap;

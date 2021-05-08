@@ -2,14 +2,13 @@ import Input from '../../components/input';
 import './styles.css';
 
 type HomeProps = {
-  open?: boolean;
   onSearch?: Function;
   showSearch: boolean;
   playlist: React.ReactNode;
 };
 
-const Home = ({ open, onSearch, showSearch, playlist }: HomeProps) => {
-  return open ? (
+const Home = ({ onSearch, showSearch, playlist }: HomeProps) => {
+  return (
     <div className="home">
       {showSearch && (
         <div className="home__input">
@@ -22,7 +21,7 @@ const Home = ({ open, onSearch, showSearch, playlist }: HomeProps) => {
       )}
       {playlist}
     </div>
-  ) : null;
+  );
 };
 
 export default Home;
