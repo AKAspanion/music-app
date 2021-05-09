@@ -162,7 +162,9 @@ function App() {
   };
 
   const deleteSong = (index: number) => {
-    dispatch(PLAY_SONG(-2));
+    if (index === playState.index) {
+      dispatch(PLAY_SONG(-2));
+    }
 
     setTimeout(() => {
       dispatch(DELETE_SONG(index));
