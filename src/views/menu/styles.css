@@ -37,7 +37,7 @@
 .menu__item__name {
   font-size: 18px;
   overflow: hidden;
-  font-weight: 500;
+  font-weight: 400;
   user-select: none;
   white-space: nowrap;
   letter-spacing: 2px;
