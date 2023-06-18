@@ -1,7 +1,8 @@
 {
   "name": "music-app",
   "version": "0.1.0",
-  "private": true,
+  "description": "🎵 Music Player powered by PWA",
+  "private": false,
   "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
@@ -64,5 +65,23 @@
     "@types/jsmediatags": "^3.9.2",
     "@types/localforage": "^0.0.34",
     "gh-pages": "^3.1.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/AKAspanion/music-app/issues",
+    "email": "project@hostname.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AKAspanion/music-app"
+  },
+  "author": "Ankit Kumar Pandit <panditankit1995@gmail.com> (https://akaspanion.github.io/)",
+  "license": "MIT",
+  "keywords": [
+    "pwa",
+    "music",
+    "music-app",
+    "musicapp",
+    "music-player",
+    "musicplayer"
+  ]
 }
